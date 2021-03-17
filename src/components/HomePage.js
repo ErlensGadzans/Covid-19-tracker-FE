@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
-import { Card } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 import Table from "./Table";
 import { sortData } from "./utilities";
 import numeral from "numeral";
+import Map from "./Map";
+import "leaflet/dist/leaflet.css";
 
 export default function MainPage() {
   const [globalCases, setGlobalCases] = useState([]);
@@ -48,23 +50,34 @@ export default function MainPage() {
   }, []);
 
   return (
-    <div>
+    <div className="app">
       <NavBar />
-      <Card style={{ width: "18rem" }}>
-        <Card.Body className="globalCases">
-          <Card.Title>Globas Cases</Card.Title>
-          <Card.Subtitle className="globalCases">
-            {globalCases.map((cases, index) => (
-              <div key={index}>{numeral(cases.confirmed).format("0,0")}</div>
-            ))}
-          </Card.Subtitle>
-        </Card.Body>
-      </Card>
-      <Card style={{ width: "18rem" }}>
-        <Card.Body className="casesByCountries">
-          <Table countries={tableData} />
-        </Card.Body>
-      </Card>
+      <Row>
+        <Col>
+          <Card className="globalCard">
+            <Card.Body className="globalCases">
+              <Card.Title>
+                <small>Globas Cases</small>
+              </Card.Title>
+              <Card.Subtitle className="globalCasesNumber">
+                {globalCases.map((cases, index) => (
+                  <div key={index}>
+                    <h3>{numeral(cases.confirmed).format("0,0")}</h3>
+                  </div>
+                ))}
+              </Card.Subtitle>
+            </Card.Body>
+          </Card>
+          <Card className="casesByCountriesCard">
+            <Card.Body className="casesByCountries">
+              <Table countries={tableData} />
+            </Card.Body>
+          </Card>{" "}
+        </Col>
+        <Col>
+          <Map />
+        </Col>
+      </Row>
     </div>
   );
 }

@@ -7,9 +7,11 @@ export default function Table({ countries }) {
     <div className="table">
       {countries.map(({ countryName, confirmedCases }) => (
         <tr>
-          <td>{countryName}</td>
+          <td className="countryName">{countryName}</td>
           <td>
-            <strong>{numeral(confirmedCases).format("0,0")}</strong>
+            <strong className="confirmedCases">
+              {numeral(confirmedCases).format("0,0")}
+            </strong>
           </td>
         </tr>
       ))}
