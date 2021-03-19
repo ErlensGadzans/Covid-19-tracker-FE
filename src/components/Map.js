@@ -1,7 +1,8 @@
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import "./Map.css";
-import { Circle } from "react-leaflet";
+import { Circle, Popup } from "react-leaflet";
+import numeral from "numeral";
 
 export default function Map({ countries }) {
   // console.log(countries);
@@ -21,18 +22,24 @@ export default function Map({ countries }) {
           .filter((c) => c.latitude && c.longitude)
           .map((country) => (
             <>
-              (country.latitude && country.longitude) ?
               <Circle
                 center={[country.latitude, country.longitude]}
                 pathOptions={{ color: "red" }}
                 fillOpacity={0.3}
                 radius={calculateRadius(country.confirmed, maximum)}
-              ></Circle>
-              :
-              {(() => {
-                console.log(country.latitude, country.longitude);
-                return null;
-              })()}
+              >
+                <Popup className="popUp">
+                  <div className="countriesPopup">
+                    <div className="countryName">{country.country}</div>
+                    <div className="countryCases">
+                      Cases: {numeral(country.confirmed).format("0,0")}
+                    </div>
+                    <div className="countryDeaths">
+                      Deaths: {numeral(country.deaths).format("0,0")}
+                    </div>
+                  </div>
+                </Popup>
+              </Circle>
             </>
           ))}
       </MapContainer>

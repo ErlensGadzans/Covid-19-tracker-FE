@@ -1,16 +1,28 @@
 .map {
-    height: 600px;
-    background-color: #222222 ;
-    padding: 1rem;
-    border-radius: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;    
-  }
+  height: 600px;
+  background-color: #222222;
+  padding: 1rem;
+  border-radius: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
-  .map .leaflet-container {
-    height: 100%;
-  }
+.map .leaflet-container {
+  height: 100%;
+}
 
+.countriesPopup {
+  background-color: #222222;
+}
 
-  
-  
+.leaflet-popup-content-wrapper {
+  background-color: #222222;
+}
+
+.countryDeaths {
+  color: lightgray;
+}
+
+.countryCases {
+  color: lightgray;
+}
