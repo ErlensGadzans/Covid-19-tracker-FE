@@ -58,7 +58,7 @@ export default function MainPage() {
     <div className="app">
       <NavBar />
       <Row>
-        <Col>
+        <Col className="col-3">
           <Card className="globalCard">
             <Card.Body className="globalCases">
               <Card.Title>
@@ -79,8 +79,8 @@ export default function MainPage() {
             </Card.Body>
           </Card>{" "}
         </Col>
-        <Col>
-          <Map countries={mapCountries} />
+        <Col className="col-9">
+          <Map className="worldMap" countries={mapCountries} />
         </Col>
       </Row>
     </div>

@@ -1,25 +1,22 @@
 .table {
-    margin-top: 20px;
-    overflow: scroll;
-    overflow-x: hidden;
-  
-    height: 400px;
-    color: #222222
-  }
-  .confirmedCases{
-    color:red
-  }
-  .countryName{
-    color: lightgray
-  }
-  
-  /* .table tr {
-    display: flex;
-    justify-content: space-between;
-  } */
-  /* .table td {
-    padding: 0.5rem;
-  } */
-  /* .table tr:nth-of-type(odd) {
-    background-color: #f3f2f8;
-  } */
+  margin-top: 20px;
+  overflow: scroll;
+  overflow-x: hidden;
+  height: 65vh;
+  color: #222222;
+}
+.confirmedCases {
+  color: red;
+}
+.countryName {
+  color: lightgray;
+}
+
+.table tr {
+  display: flex;
+  justify-content: space-between;
+}
+.table td {
+  border-top: none;
+  padding: 0.4rem;
+}

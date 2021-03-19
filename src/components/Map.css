@@ -12,11 +12,11 @@
 }
 
 .countriesPopup {
-  background-color: #222222;
+  background-color: #222222 !important;
 }
 
 .leaflet-popup-content-wrapper {
-  background-color: #222222;
+  background-color: #222222 !important;
 }
 
 .countryDeaths {
