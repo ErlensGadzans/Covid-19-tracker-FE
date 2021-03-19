@@ -11,13 +11,14 @@ export default function MainPage() {
   const [globalCases, setGlobalCases] = useState([]);
   const [countries, setCountries] = useState([]);
   const [tableData, setTableData] = useState([]);
+  const [mapCountries, setMapCountries] = useState([]);
 
   const fetchGlobalCases = async () => {
     try {
       const response = await fetch("http://localhost:3077/api/totals");
-      const data = await response.json();
-      setGlobalCases(data);
-      console.log(data);
+      const dataGlobal = await response.json();
+      setGlobalCases(dataGlobal);
+      // console.log(dataGlobal);
     } catch (error) {
       console.log(error);
     }
@@ -31,15 +32,18 @@ export default function MainPage() {
     try {
       const response = await fetch("http://localhost:3077/api/allcountries");
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       const countries = data.map((country) => ({
         countryName: country.country,
         confirmedCases: country.confirmed,
       }));
+
       const sortedData = sortData(countries);
       setTableData(sortedData);
       setCountries(countries);
-      console.log(countries);
+      setMapCountries(data);
+      console.log("setMapCountries", data);
+      // console.log(countries);
     } catch (error) {
       console.log(error);
     }
@@ -75,7 +79,7 @@ export default function MainPage() {
           </Card>{" "}
         </Col>
         <Col>
-          <Map />
+          <Map countries={mapCountries} />
         </Col>
       </Row>
     </div>
