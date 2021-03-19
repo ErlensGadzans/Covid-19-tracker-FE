@@ -41,6 +41,7 @@ export default function MainPage() {
       const sortedData = sortData(countries);
       setTableData(sortedData);
       setCountries(countries);
+
       setMapCountries(data);
       console.log("setMapCountries", data);
       // console.log(countries);
