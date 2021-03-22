@@ -11,14 +11,3 @@ export const sortData = (data) => {
     }
   });
 };
-
-// const dataOnMap = (countries) =>
-//   countries.map((country) => (
-//     <Circle
-//       center={[country.latitude, country.longitude]}
-//       //   center={[15.199999, -86.241905]}
-//       pathOptions={{ color: "red" }}
-//       fillOpacity={0.3}
-//       radius={30}
-//     ></Circle>
-//   ));

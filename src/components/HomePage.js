@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import { Card, Row, Col } from "react-bootstrap";
 import Table from "./Table";
+import Table2 from "./Table2";
+
 import { sortData } from "./utilities";
 import numeral from "numeral";
 import Map from "./Map";
@@ -18,7 +20,7 @@ export default function MainPage() {
       const response = await fetch("http://localhost:3077/api/totals");
       const dataGlobal = await response.json();
       setGlobalCases(dataGlobal);
-      // console.log(dataGlobal);
+      console.log(dataGlobal);
     } catch (error) {
       console.log(error);
     }
@@ -36,6 +38,8 @@ export default function MainPage() {
       const countries = data.map((country) => ({
         countryName: country.country,
         confirmedCases: country.confirmed,
+        deathCases: country.deaths,
+        recoveredCases: country.recovered,
       }));
 
       const sortedData = sortData(countries);
@@ -79,8 +83,11 @@ export default function MainPage() {
             </Card.Body>
           </Card>{" "}
         </Col>
-        <Col className="col-9">
+        <Col className="col-7">
           <Map className="worldMap" countries={mapCountries} />
+        </Col>
+        <Col className=" globalDeathsAndRecoveries col-2">
+          {<Table2 globalCases={globalCases} countries={tableData} />}
         </Col>
       </Row>
     </div>

@@ -1,0 +1,50 @@
+.table2 {
+  margin-top: 20px;
+  scroll-behavior: none;
+  overflow: hidden;
+  height: 560px;
+  color: #222222;
+}
+
+.globalDeathsTotal {
+  color: red;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+.globalRecoveryTotal {
+  color: green;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+.recoveredCases {
+  color: green;
+}
+
+.table2 td {
+  border-top: none;
+  padding: 0.4rem;
+}
+#controlled-tab-example-tab-globalRecovered {
+  background-color: #222222;
+  border-color: gray !important;
+  color: lightgray;
+  font-size: 0.9rem;
+}
+
+#controlled-tab-example-tab-globalDeaths {
+  background-color: #222222;
+  border-color: gray !important;
+  color: lightgray;
+  font-size: 0.9rem;
+}
+
+#controlled-tab-example-tab-globalRecovered.nav-item.nav-link.active {
+  background-color: black;
+}
+#controlled-tab-example-tab-globalDeaths.nav-item.nav-link.active {
+  background-color: black;
+}
