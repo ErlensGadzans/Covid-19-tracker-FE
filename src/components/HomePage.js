@@ -4,7 +4,6 @@ import { Card, Row, Col } from "react-bootstrap";
 import Table from "./Table";
 import Table2 from "./Table2";
 import Graphic from "./Graphic";
-
 import { sortData } from "./utilities";
 import numeral from "numeral";
 import Map from "./Map";
@@ -15,6 +14,7 @@ export default function MainPage() {
   const [countries, setCountries] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
+  const [casesType, setCasesType] = useState("cases");
 
   const fetchGlobalCases = async () => {
     try {
@@ -92,11 +92,8 @@ export default function MainPage() {
         </Col>
       </Row>
       <Row>
-        <Col className="col-6">
-          <Graphic className="Graphic" />
-        </Col>
-        <Col className="col-6">
-          <Graphic className="Graphic" />
+        <Col className="col-12">
+          <Graphic className="Graphic" casesType={casesType} />
         </Col>
       </Row>
     </div>
