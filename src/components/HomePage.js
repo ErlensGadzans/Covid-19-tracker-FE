@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 import { Card, Row, Col } from "react-bootstrap";
 import Table from "./Table";
 import Table2 from "./Table2";
+import Graphic from "./Graphic";
 
 import { sortData } from "./utilities";
 import numeral from "numeral";
@@ -88,6 +89,14 @@ export default function MainPage() {
         </Col>
         <Col className=" globalDeathsAndRecoveries col-2">
           {<Table2 globalCases={globalCases} countries={tableData} />}
+        </Col>
+      </Row>
+      <Row>
+        <Col className="col-6">
+          <Graphic className="Graphic" />
+        </Col>
+        <Col className="col-6">
+          <Graphic className="Graphic" />
         </Col>
       </Row>
     </div>
