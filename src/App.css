@@ -41,3 +41,11 @@ body {
   border-radius: 20px !important;
   background-color: #222222;
 }
+.Graphic {
+  /* width: auto; */
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+  border-radius: 20px !important;
+  background-color: #222222;
+}

@@ -4,6 +4,11 @@ import numeral from "numeral";
 import "./Graphic.css";
 
 const options = {
+  title: {
+    display: true,
+    position: "top",
+    text: "Daily confirmed cases",
+  },
   legend: {
     display: false,
   },
@@ -30,7 +35,7 @@ const options = {
         type: "time",
         time: {
           displayFormats: {
-            month: " MMM YYYY",
+            month: "MMM YYYY",
           },
         },
       },
@@ -64,7 +69,7 @@ const buildChartData = (data, casesType) => {
 };
 
 export default function Graphic({ casesType }) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
 
   const fetchGlobalCasesGraph = async () => {
     try {
@@ -91,7 +96,9 @@ export default function Graphic({ casesType }) {
         <Line
           className="line"
           data={{
-            datasets: [{ data, borderColor: "red" }],
+            datasets: [
+              { data, borderColor: "red", backgroundColor: "lightred" },
+            ],
           }}
           options={options}
         />

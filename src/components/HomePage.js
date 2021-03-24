@@ -3,7 +3,8 @@ import NavBar from "./NavBar";
 import { Card, Row, Col } from "react-bootstrap";
 import Table from "./Table";
 import Table2 from "./Table2";
-import Graphic from "./Graphic";
+import GraphicCases from "./GraphicCases";
+import GraphicRecovered from "./GraphicRecovered";
 import { sortData } from "./utilities";
 import numeral from "numeral";
 import Map from "./Map";
@@ -15,6 +16,7 @@ export default function MainPage() {
   const [tableData, setTableData] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
   const [casesType, setCasesType] = useState("cases");
+  const [casesTypeRecovered, setCasesTypeRecovered] = useState("recovered");
 
   const fetchGlobalCases = async () => {
     try {
@@ -87,13 +89,19 @@ export default function MainPage() {
         <Col className="col-7">
           <Map className="worldMap" countries={mapCountries} />
         </Col>
-        <Col className=" globalDeathsAndRecoveries col-2">
+        <Col className="globalDeathsAndRecoveries col-2">
           {<Table2 globalCases={globalCases} countries={tableData} />}
         </Col>
       </Row>
-      <Row>
-        <Col className="col-12">
-          <Graphic className="Graphic" casesType={casesType} />
+      <Row className="justify-content-between">
+        <Col className="Graphic md-col-4">
+          <GraphicCases className="Graphic" casesType={casesType} />
+        </Col>
+        <Col className="Graphic md-col-4">
+          <GraphicRecovered casesTypeRecovered={casesTypeRecovered} />
+        </Col>
+        <Col className="Graphic md-col-4">
+          <GraphicRecovered casesTypeRecovered={casesTypeRecovered} />
         </Col>
       </Row>
     </div>
