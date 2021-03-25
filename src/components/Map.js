@@ -37,6 +37,9 @@ export default function Map({ countries }) {
                     <div className="countryDeaths">
                       Deaths: {numeral(country.deaths).format("0,0")}
                     </div>
+                    <div className="countryDeaths">
+                      Recovered: {numeral(country.recovered).format("0,0")}
+                    </div>
                   </div>
                 </Popup>
               </Circle>

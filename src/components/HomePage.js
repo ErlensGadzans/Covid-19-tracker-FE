@@ -16,6 +16,9 @@ export default function MainPage() {
   const [countries, setCountries] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
+  const [casesConfirmed, setCasesConfirmed] = useState("cases");
+  const [casesRecovered, setCasesRecovered] = useState("recovered");
+  const [casesDeaths, setCasesDeaths] = useState("deaths");
 
   const fetchGlobalCases = async () => {
     try {
