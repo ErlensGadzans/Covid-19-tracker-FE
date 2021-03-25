@@ -52,23 +52,23 @@ const options = {
   },
 };
 
-const buildChartData = (data, casesTypeRecovered) => {
+const buildChartData = (data, casesRecovered) => {
   const chartData = [];
   let lastDataPoint;
   for (let date in data.cases) {
     if (lastDataPoint) {
       const newDataPoint = {
         x: date,
-        y: data[casesTypeRecovered][date] - lastDataPoint,
+        y: data[casesRecovered][date] - lastDataPoint,
       };
       chartData.push(newDataPoint);
     }
-    lastDataPoint = data[casesTypeRecovered][date];
+    lastDataPoint = data[casesRecovered][date];
   }
   return chartData;
 };
 
-export default function Graphic({ casesTypeRecovered }) {
+export default function Graphic({ casesRecovered }) {
   const [data, setData] = useState([]);
 
   const fetchGlobalCasesGraph = async () => {
@@ -78,7 +78,7 @@ export default function Graphic({ casesTypeRecovered }) {
       );
       const data = await response.json();
       console.log("data", data);
-      const chartData = buildChartData(data, casesTypeRecovered);
+      const chartData = buildChartData(data, casesRecovered);
       console.log("chartDataRecovered", chartData);
       setData(chartData);
     } catch (error) {
@@ -88,7 +88,7 @@ export default function Graphic({ casesTypeRecovered }) {
 
   useEffect(() => {
     fetchGlobalCasesGraph();
-  }, [casesTypeRecovered]);
+  }, [casesRecovered]);
 
   return (
     <div>

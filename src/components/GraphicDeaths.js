@@ -7,7 +7,7 @@ const options = {
   title: {
     display: true,
     position: "top",
-    text: "Daily confirmed cases",
+    text: "Daily deaths",
   },
   legend: {
     display: false,
@@ -52,23 +52,23 @@ const options = {
   },
 };
 
-const buildChartData = (data, casesConfirmed) => {
+const buildChartData = (data, casesDeaths) => {
   const chartData = [];
   let lastDataPoint;
-  for (let date in data.cases) {
+  for (let date in data.deaths) {
     if (lastDataPoint) {
       const newDataPoint = {
         x: date,
-        y: data[casesConfirmed][date] - lastDataPoint,
+        y: data[casesDeaths][date] - lastDataPoint,
       };
       chartData.push(newDataPoint);
     }
-    lastDataPoint = data[casesConfirmed][date];
+    lastDataPoint = data[casesDeaths][date];
   }
   return chartData;
 };
 
-export default function Graphic({ casesConfirmed }) {
+export default function Graphic({ casesDeaths }) {
   const [data, setData] = useState([]);
 
   const fetchGlobalCasesGraph = async () => {
@@ -78,7 +78,7 @@ export default function Graphic({ casesConfirmed }) {
       );
       const data = await response.json();
       console.log("data", data);
-      const chartData = buildChartData(data, casesConfirmed);
+      const chartData = buildChartData(data, casesDeaths);
       console.log("chartData", chartData);
       setData(chartData);
     } catch (error) {
@@ -88,7 +88,7 @@ export default function Graphic({ casesConfirmed }) {
 
   useEffect(() => {
     fetchGlobalCasesGraph();
-  }, [casesConfirmed]);
+  }, [casesDeaths]);
 
   return (
     <div>

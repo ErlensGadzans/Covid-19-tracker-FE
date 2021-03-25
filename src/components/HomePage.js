@@ -5,6 +5,7 @@ import Table from "./Table";
 import Table2 from "./Table2";
 import GraphicCases from "./GraphicCases";
 import GraphicRecovered from "./GraphicRecovered";
+import GraphicDeaths from "./GraphicDeaths";
 import { sortData } from "./utilities";
 import numeral from "numeral";
 import Map from "./Map";
@@ -15,8 +16,9 @@ export default function MainPage() {
   const [countries, setCountries] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
-  const [casesType, setCasesType] = useState("cases");
-  const [casesTypeRecovered, setCasesTypeRecovered] = useState("recovered");
+  const [casesConfirmed, setCasesConfirmed] = useState("cases");
+  const [casesRecovered, setCasesRecovered] = useState("recovered");
+  const [casesDeaths, setCasesDeaths] = useState("deaths");
 
   const fetchGlobalCases = async () => {
     try {
@@ -95,13 +97,13 @@ export default function MainPage() {
       </Row>
       <Row className="justify-content-between">
         <Col className="Graphic md-col-4">
-          <GraphicCases className="Graphic" casesType={casesType} />
+          <GraphicCases className="Graphic" casesConfirmed={casesConfirmed} />
         </Col>
         <Col className="Graphic md-col-4">
-          <GraphicRecovered casesTypeRecovered={casesTypeRecovered} />
+          <GraphicDeaths casesDeaths={casesDeaths} />
         </Col>
         <Col className="Graphic md-col-4">
-          <GraphicRecovered casesTypeRecovered={casesTypeRecovered} />
+          <GraphicRecovered casesRecovered={casesRecovered} />
         </Col>
       </Row>
     </div>
