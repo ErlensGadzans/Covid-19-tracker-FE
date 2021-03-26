@@ -5,9 +5,9 @@ import { Circle, Popup } from "react-leaflet";
 import numeral from "numeral";
 
 export default function Map({ countries }) {
-  // console.log(countries);
+  console.log("COUNTRIES:", countries);
   const MAX_RADIUS = 1200000;
-  const confirmed = countries.map((country) => country.confirmed);
+  const confirmed = countries.map((country) => country.cases);
   const findMaxConfirmed = (confirmed) => Math.max(...confirmed);
   const maximum = findMaxConfirmed(confirmed);
   const calculateRadius = (x, maximum) => (x * MAX_RADIUS) / maximum;
@@ -19,20 +19,28 @@ export default function Map({ countries }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {countries
-          .filter((c) => c.latitude && c.longitude)
+          .filter(
+            (country) => country.countryInfo.lat && country.countryInfo.long
+          )
           .map((country) => (
             <>
               <Circle
-                center={[country.latitude, country.longitude]}
+                center={[country.countryInfo.lat, country.countryInfo.long]}
                 pathOptions={{ color: "red" }}
                 fillOpacity={0.3}
-                radius={calculateRadius(country.confirmed, maximum)}
+                radius={calculateRadius(country.cases, maximum)}
               >
                 <Popup className="popUp">
                   <div className="countriesPopup">
+                    <div
+                      className="countryFlag"
+                      style={{
+                        backgroundImage: `url(${country.countryInfo.flag})`,
+                      }}
+                    ></div>{" "}
                     <div className="countryName">{country.country}</div>
                     <div className="countryCases">
-                      Cases: {numeral(country.confirmed).format("0,0")}
+                      Cases: {numeral(country.cases).format("0,0")}
                     </div>
                     <div className="countryDeaths">
                       Deaths: {numeral(country.deaths).format("0,0")}

@@ -19,13 +19,14 @@ export default function MainPage() {
   const [casesConfirmed, setCasesConfirmed] = useState("cases");
   const [casesRecovered, setCasesRecovered] = useState("recovered");
   const [casesDeaths, setCasesDeaths] = useState("deaths");
+  const [countriesData, setCountriesData] = useState([]);
 
   const fetchGlobalCases = async () => {
     try {
       const response = await fetch("http://localhost:3077/api/totals");
-      const dataGlobal = await response.json();
-      setGlobalCases(dataGlobal);
-      console.log(dataGlobal);
+      const data = await response.json();
+      // console.log("GLOBAL DATA:", data);
+      setGlobalCases(data);
     } catch (error) {
       console.log(error);
     }
@@ -39,10 +40,10 @@ export default function MainPage() {
     try {
       const response = await fetch("http://localhost:3077/api/allcountries");
       const data = await response.json();
-      // console.log(data);
+      console.log("ALL COUNTRIES:", data);
       const countries = data.map((country) => ({
         countryName: country.country,
-        confirmedCases: country.confirmed,
+        confirmedCases: country.cases,
         deathCases: country.deaths,
         recoveredCases: country.recovered,
       }));
@@ -50,9 +51,8 @@ export default function MainPage() {
       const sortedData = sortData(countries);
       setTableData(sortedData);
       setCountries(countries);
-
       setMapCountries(data);
-      console.log("setMapCountries", data);
+      // console.log("setMapCountries", data);
       // console.log(countries);
     } catch (error) {
       console.log(error);
@@ -63,22 +63,38 @@ export default function MainPage() {
     fetchCountriesData();
   }, []);
 
+  const fetchCasesByCountries = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3077/api/byTimeAndCountry"
+      );
+      const data = await response.json();
+      setCountriesData(data);
+      // console.log("contriesData:", data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCasesByCountries();
+  }, []);
+
   return (
     <div className="app">
-      <NavBar />
+      <NavBar countries={countriesData} />
       <Row>
         <Col className="col-3">
           <Card className="globalCard">
             <Card.Body className="globalCases">
               <Card.Title>
-                <small>Globas Cases</small>
+                <small>Global Cases</small>
               </Card.Title>
               <Card.Subtitle className="globalCasesNumber">
-                {globalCases.map((cases, index) => (
-                  <div key={index}>
-                    <h3>{numeral(cases.confirmed).format("0,0")}</h3>
-                  </div>
-                ))}
+                <div>
+                  <h3>{numeral(globalCases.cases).format("0,0")}</h3>
+                </div>
+                ))
               </Card.Subtitle>
             </Card.Body>
           </Card>

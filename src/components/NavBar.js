@@ -13,7 +13,11 @@ export default function NavBar() {
             <Nav.Link href="#pricing">Pricing</Nav.Link> */}
           </Nav>
           <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            <FormControl
+              type="text"
+              placeholder="Enter country"
+              className="mr-sm-2"
+            />
             <Button variant="outline-info">Search</Button>
           </Form>
         </Navbar>

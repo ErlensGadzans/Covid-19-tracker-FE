@@ -14,11 +14,10 @@ export default function Table2({ globalCases, countries }) {
         onSelect={(k) => setKey(k)}
       >
         <Tab eventKey="globalDeaths" title="Global deaths">
-          {globalCases.map((cases) => (
-            <td className="globalDeathsTotal">
-              <h3>{numeral(cases.deaths).format("0,0")}</h3>
-            </td>
-          ))}
+          <td className="globalDeathsTotal">
+            <h3>{numeral(globalCases.deaths).format("0,0")}</h3>
+          </td>
+          ))
           <div className="table21">
             {countries.map(({ countryName, deathCases }) => (
               <tr>
@@ -34,11 +33,10 @@ export default function Table2({ globalCases, countries }) {
         </Tab>
 
         <Tab eventKey="globalRecovered" title="Global recovered">
-          {globalCases.map((cases) => (
-            <td className="globalRecoveryTotal">
-              <h3>{numeral(cases.recovered).format("0,0")}</h3>
-            </td>
-          ))}
+          <td className="globalRecoveryTotal">
+            <h3>{numeral(globalCases.recovered).format("0,0")}</h3>
+          </td>
+          ))
           <div className="table21">
             {countries.map(({ countryName, recoveredCases }) => (
               <tr>
