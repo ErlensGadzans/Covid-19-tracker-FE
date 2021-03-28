@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
-import { Card, Row, Col } from "react-bootstrap";
+import { Card, Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
 import Table from "./Table";
 import Table2 from "./Table2";
 import GraphicCases from "./GraphicCases";
@@ -19,7 +19,9 @@ export default function MainPage() {
   const [casesConfirmed, setCasesConfirmed] = useState("cases");
   const [casesRecovered, setCasesRecovered] = useState("recovered");
   const [casesDeaths, setCasesDeaths] = useState("deaths");
-  const [countriesData, setCountriesData] = useState([]);
+  const [singleCountry, setSingleCountry] = useState([]);
+  const [mapCenter, setMapCenter] = useState([51.505, -0.09]);
+  const [mapZoom, setMapZoom] = useState(2);
 
   const fetchGlobalCases = async () => {
     try {
@@ -40,14 +42,13 @@ export default function MainPage() {
     try {
       const response = await fetch("http://localhost:3077/api/allcountries");
       const data = await response.json();
-      console.log("ALL COUNTRIES:", data);
+      // console.log("ALL COUNTRIES:", data);
       const countries = data.map((country) => ({
         countryName: country.country,
         confirmedCases: country.cases,
         deathCases: country.deaths,
         recoveredCases: country.recovered,
       }));
-
       const sortedData = sortData(countries);
       setTableData(sortedData);
       setCountries(countries);
@@ -63,26 +64,49 @@ export default function MainPage() {
     fetchCountriesData();
   }, []);
 
-  const fetchCasesByCountries = async () => {
+  const fetchCountry = async (countryName) => {
     try {
       const response = await fetch(
-        "http://localhost:3077/api/byTimeAndCountry"
+        "http://localhost:3077/api/countries/" + countryName
       );
-      const data = await response.json();
-      setCountriesData(data);
-      // console.log("contriesData:", data);
+
+      if (!response.ok) {
+        throw new Error("Please enter correct country name");
+      } else {
+        const data = await response.json();
+        console.log("FOR SEARCH:", data);
+        setSingleCountry(data);
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        setMapZoom(5);
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchCasesByCountries();
+    fetchCountry();
   }, []);
 
+  console.log({ mapCenter, mapZoom });
   return (
     <div className="app">
-      <NavBar countries={countriesData} />
+      <div className="appHeader">
+        <DropdownButton
+          menuAlign="right"
+          title="Worldwide"
+          id="dropdown-menu-align-right"
+          variant="secondary"
+        >
+          <Dropdown.Item value="worldwide"></Dropdown.Item>
+          {countries.map((country) => (
+            <Dropdown.Item key={country.countryName}>
+              {country.countryName}
+            </Dropdown.Item>
+          ))}
+        </DropdownButton>
+      </div>
+
       <Row>
         <Col className="col-3">
           <Card className="globalCard">
@@ -105,7 +129,12 @@ export default function MainPage() {
           </Card>{" "}
         </Col>
         <Col className="col-7">
-          <Map className="worldMap" countries={mapCountries} />
+          <Map
+            className="worldMap"
+            countries={mapCountries}
+            center={mapCenter}
+            zoom={mapZoom}
+          />
         </Col>
         <Col className="globalDeathsAndRecoveries col-2">
           {<Table2 globalCases={globalCases} countries={tableData} />}

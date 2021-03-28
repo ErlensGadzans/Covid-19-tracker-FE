@@ -4,7 +4,7 @@ import "./Map.css";
 import { Circle, Popup } from "react-leaflet";
 import numeral from "numeral";
 
-export default function Map({ countries }) {
+export default function Map({ countries, center, zoom }) {
   console.log("COUNTRIES:", countries);
   const MAX_RADIUS = 1200000;
   const confirmed = countries.map((country) => country.cases);
@@ -13,15 +13,15 @@ export default function Map({ countries }) {
   const calculateRadius = (x, maximum) => (x * MAX_RADIUS) / maximum;
   return (
     <div className="map">
-      <MapContainer center={[51.505, -0.09]} zoom={2} scrollWheelZoom={false}>
+      <MapContainer center={center} zoom={zoom} scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {countries
-          .filter(
-            (country) => country.countryInfo.lat && country.countryInfo.long
-          )
+          // .filter(
+          //   (country) => country.countryInfo.lat && country.countryInfo.long
+          // )
           .map((country) => (
             <>
               <Circle
