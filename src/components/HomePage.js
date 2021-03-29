@@ -68,14 +68,14 @@ export default function MainPage() {
   const getCountry = async (event) => {
     // event.preventDefault();
     const countryName = event.target.value;
-    console.log(event.target.value, event.currentTarget.value);
+    // console.log(event.target.value, event.currentTarget.value);
 
     const fetchCountry = await fetch(
       `https://disease.sh/v3/covid-19/countries/${countryName}`
       // `http://localhost:3077/api/countries/${countryName}`
     );
     const data = await fetchCountry.json();
-    console.log("SINGLE COUNTRY:", data);
+    // console.log("SINGLE COUNTRY:", data);
     setSingleCountry(countryName);
     setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
     setMapZoom(5);
@@ -84,6 +84,7 @@ export default function MainPage() {
   console.log({ mapCenter, mapZoom });
   return (
     <div className="app">
+      {/* <div>Covid-19 trackeer</div> */}
       <div className="appHeader">
         <FormControl className="app__dropdown">
           <Select
@@ -136,14 +137,19 @@ export default function MainPage() {
       </Row>
       <Row className="justify-content-between">
         <Col className="Graphic md-col-4">
-          <GraphicCases className="Graphic" casesConfirmed={casesConfirmed} />
+          <GraphicCases
+            className="Graphic"
+            casesConfirmed={casesConfirmed}
+            casesDeaths={casesDeaths}
+            casesRecovered={casesRecovered}
+          />
         </Col>
-        <Col className="Graphic md-col-4">
+        {/* <Col className="Graphic md-col-4">
           <GraphicDeaths casesDeaths={casesDeaths} />
         </Col>
         <Col className="Graphic md-col-4">
           <GraphicRecovered casesRecovered={casesRecovered} />
-        </Col>
+        </Col> */}
       </Row>
     </div>
   );
