@@ -7,10 +7,10 @@ const options = {
   title: {
     display: true,
     position: "top",
-    text: "Confirmed cases",
+    text: "Global cases",
   },
   legend: {
-    display: false,
+    display: true,
   },
 
   elements: {
@@ -20,15 +20,17 @@ const options = {
   },
   maintainAspectRatio: true,
   tooltips: {
-    mode: "index",
+    mode: "nearest",
     intersect: false,
-    backgroundColor: "red",
+
+    backgroundColor: "black",
     callbacks: {
       label: function (tooltipItem) {
-        return numeral(tooltipItem.value).format("+0,0");
+        return numeral(tooltipItem.value).format("0,0");
       },
     },
   },
+
   scales: {
     xAxes: [
       {
@@ -173,7 +175,11 @@ export default function Graphic({
                   label: "Confirmed cases",
                   borderColor: "red",
                 },
-                { data: dataDeaths, label: "Deaths", borderColor: "blue" },
+                {
+                  data: dataDeaths,
+                  label: "Deaths",
+                  borderColor: "blue",
+                },
                 {
                   data: dataRecovered,
                   label: "Recovered",

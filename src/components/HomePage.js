@@ -135,8 +135,8 @@ export default function MainPage() {
           {<Table2 globalCases={globalCases} countries={tableData} />}
         </Col>
       </Row>
-      <Row className="justify-content-between">
-        <Col className="Graphic md-col-4">
+      <Row className="Graphic1">
+        <Col className="chart-container col-6">
           <GraphicCases
             className="Graphic"
             casesConfirmed={casesConfirmed}
