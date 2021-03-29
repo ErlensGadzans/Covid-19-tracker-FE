@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
-import { Card, Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
+import { FormControl, Select, MenuItem } from "@material-ui/core";
 import Table from "./Table";
 import Table2 from "./Table2";
 import GraphicCases from "./GraphicCases";
@@ -19,7 +20,7 @@ export default function MainPage() {
   const [casesConfirmed, setCasesConfirmed] = useState("cases");
   const [casesRecovered, setCasesRecovered] = useState("recovered");
   const [casesDeaths, setCasesDeaths] = useState("deaths");
-  const [singleCountry, setSingleCountry] = useState([]);
+  const [singleCountry, setSingleCountry] = useState("worldwide");
   const [mapCenter, setMapCenter] = useState([51.505, -0.09]);
   const [mapZoom, setMapZoom] = useState(2);
 
@@ -64,47 +65,40 @@ export default function MainPage() {
     fetchCountriesData();
   }, []);
 
-  const fetchCountry = async (countryName) => {
-    try {
-      const response = await fetch(
-        "http://localhost:3077/api/countries/" + countryName
-      );
+  const getCountry = async (event) => {
+    // event.preventDefault();
+    const countryName = event.target.value;
+    console.log(event.target.value, event.currentTarget.value);
 
-      if (!response.ok) {
-        throw new Error("Please enter correct country name");
-      } else {
-        const data = await response.json();
-        console.log("FOR SEARCH:", data);
-        setSingleCountry(data);
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        setMapZoom(5);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    const fetchCountry = await fetch(
+      `https://disease.sh/v3/covid-19/countries/${countryName}`
+      // `http://localhost:3077/api/countries/${countryName}`
+    );
+    const data = await fetchCountry.json();
+    console.log("SINGLE COUNTRY:", data);
+    setSingleCountry(countryName);
+    setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+    setMapZoom(5);
   };
-
-  useEffect(() => {
-    fetchCountry();
-  }, []);
 
   console.log({ mapCenter, mapZoom });
   return (
     <div className="app">
       <div className="appHeader">
-        <DropdownButton
-          menuAlign="right"
-          title="Worldwide"
-          id="dropdown-menu-align-right"
-          variant="secondary"
-        >
-          <Dropdown.Item value="worldwide"></Dropdown.Item>
-          {countries.map((country) => (
-            <Dropdown.Item key={country.countryName}>
-              {country.countryName}
-            </Dropdown.Item>
-          ))}
-        </DropdownButton>
+        <FormControl className="app__dropdown">
+          <Select
+            variant="outlined"
+            value={singleCountry}
+            onChange={getCountry}
+          >
+            <MenuItem value="worldwide">Worldwide</MenuItem>
+            {countries.map((country) => (
+              <MenuItem key={country.countryName} value={country.countryName}>
+                {country.countryName}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
 
       <Row>

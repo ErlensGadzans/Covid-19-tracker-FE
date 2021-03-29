@@ -5,7 +5,7 @@ import { Circle, Popup } from "react-leaflet";
 import numeral from "numeral";
 
 export default function Map({ countries, center, zoom }) {
-  console.log("COUNTRIES:", countries);
+  // console.log("COUNTRIES:", countries);
   const MAX_RADIUS = 1200000;
   const confirmed = countries.map((country) => country.cases);
   const findMaxConfirmed = (confirmed) => Math.max(...confirmed);
