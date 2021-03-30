@@ -5,7 +5,6 @@ import { FormControl, Select, MenuItem } from "@material-ui/core";
 import Table from "./Table";
 import Table2 from "./Table2";
 import GraphicCases from "./GraphicCases";
-import GraphicRecovered from "./GraphicRecovered";
 import GraphicDeaths from "./GraphicDeaths";
 import { sortData } from "./utilities";
 import numeral from "numeral";
@@ -135,8 +134,8 @@ export default function MainPage() {
           {<Table2 globalCases={globalCases} countries={tableData} />}
         </Col>
       </Row>
-      <Row className="Graphic1">
-        <Col className="chart-container col-6">
+      <Row className="Graphic display-flex justify-content between">
+        <Col className="chart-container lg-col-6">
           <GraphicCases
             className="Graphic"
             casesConfirmed={casesConfirmed}
@@ -144,12 +143,9 @@ export default function MainPage() {
             casesRecovered={casesRecovered}
           />
         </Col>
-        {/* <Col className="Graphic md-col-4">
-          <GraphicDeaths casesDeaths={casesDeaths} />
+        <Col className="chart-container lg-col-6">
+          <GraphicDeaths className="Graphic" casesDeaths={casesDeaths} />
         </Col>
-        <Col className="Graphic md-col-4">
-          <GraphicRecovered casesRecovered={casesRecovered} />
-        </Col> */}
       </Row>
     </div>
   );

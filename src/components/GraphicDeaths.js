@@ -5,12 +5,12 @@ import "./Graphic.css";
 
 const options = {
   title: {
-    display: true,
+    display: false,
     position: "top",
     text: "Daily deaths",
   },
   legend: {
-    display: false,
+    display: true,
   },
 
   elements: {
@@ -22,10 +22,10 @@ const options = {
   tooltips: {
     mode: "index",
     intersect: false,
-    backgroundColor: "red",
+    backgroundColor: "black",
     callbacks: {
       label: function (tooltipItem) {
-        return numeral(tooltipItem.value).format("+0,0");
+        return numeral(tooltipItem.value).format("0,0");
       },
     },
   },
@@ -54,16 +54,12 @@ const options = {
 
 const buildChartData = (data, casesDeaths) => {
   const chartData = [];
-  let lastDataPoint;
   for (let date in data.deaths) {
-    if (lastDataPoint) {
-      const newDataPoint = {
-        x: date,
-        y: data[casesDeaths][date] - lastDataPoint,
-      };
-      chartData.push(newDataPoint);
-    }
-    lastDataPoint = data[casesDeaths][date];
+    const newDataPoint = {
+      x: date,
+      y: data[casesDeaths][date],
+    };
+    chartData.push(newDataPoint);
   }
   return chartData;
 };
@@ -77,9 +73,9 @@ export default function Graphic({ casesDeaths }) {
         "http://localhost:3077/api/byTimeAllCountries"
       );
       const data = await response.json();
-      console.log("data", data);
+      // console.log("data", data);
       const chartData = buildChartData(data, casesDeaths);
-      console.log("chartData", chartData);
+      // console.log("chartData", chartData);
       setData(chartData);
     } catch (error) {
       console.log(error);
@@ -92,12 +88,12 @@ export default function Graphic({ casesDeaths }) {
 
   return (
     <div>
-      {data?.length > 0 && (
+      {data.length > 0 && (
         <Line
           className="line"
           data={{
             datasets: [
-              { data, borderColor: "red", backgroundColor: "lightred" },
+              { data: data, label: "Death cases", borderColor: "red" },
             ],
           }}
           options={options}
