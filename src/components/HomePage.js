@@ -65,16 +65,12 @@ export default function MainPage() {
   }, []);
 
   const getCountry = async (event) => {
-    // event.preventDefault();
     const countryName = event.target.value;
-    // console.log(event.target.value, event.currentTarget.value);
-
     const fetchCountry = await fetch(
       `https://disease.sh/v3/covid-19/countries/${countryName}`
       // `http://localhost:3077/api/countries/${countryName}`
     );
     const data = await fetchCountry.json();
-    // console.log("SINGLE COUNTRY:", data);
     setSingleCountry(countryName);
     setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
     setMapZoom(5);
@@ -83,7 +79,7 @@ export default function MainPage() {
   console.log({ mapCenter, mapZoom });
   return (
     <div className="app">
-      {/* <div>Covid-19 trackeer</div> */}
+      <div>Covid-19 trackeer</div>
       <div className="appHeader">
         <FormControl className="app__dropdown">
           <Select
@@ -134,7 +130,7 @@ export default function MainPage() {
           {<Table2 globalCases={globalCases} countries={tableData} />}
         </Col>
       </Row>
-      <Row className="Graphic display-flex justify-content between">
+      <Row className="Graphic  ">
         <Col className="chart-container lg-col-6">
           <GraphicCases
             className="Graphic"

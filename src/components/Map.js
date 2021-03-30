@@ -1,5 +1,5 @@
-import React from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import React, { useState, useEffect } from "react";
+import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import "./Map.css";
 import { Circle, Popup } from "react-leaflet";
 import numeral from "numeral";
@@ -11,9 +11,22 @@ export default function Map({ countries, center, zoom }) {
   const findMaxConfirmed = (confirmed) => Math.max(...confirmed);
   const maximum = findMaxConfirmed(confirmed);
   const calculateRadius = (x, maximum) => (x * MAX_RADIUS) / maximum;
+
+  const [position, setPosition] = useState(null);
+  const [map, setMap] = useState(null);
+
+  useEffect(() => {
+    map && map.flyTo(center, zoom);
+  }, [center, zoom]);
+
   return (
     <div className="map">
-      <MapContainer center={center} zoom={zoom} scrollWheelZoom={true}>
+      <MapContainer
+        whenCreated={setMap}
+        center={center}
+        zoom={zoom}
+        scrollWheelZoom={false}
+      >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

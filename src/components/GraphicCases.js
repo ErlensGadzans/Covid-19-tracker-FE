@@ -80,11 +80,7 @@ const buildChartDataRecovered = (data, casesRecovered) => {
   return chartDataRecovered;
 };
 
-export default function Graphic({
-  casesConfirmed,
-  casesDeaths,
-  casesRecovered,
-}) {
+export default function Graphic({ casesConfirmed, casesRecovered }) {
   const [dataCases, setDataCases] = useState([]);
 
   const [dataRecovered, seDataRecovered] = useState([]);
