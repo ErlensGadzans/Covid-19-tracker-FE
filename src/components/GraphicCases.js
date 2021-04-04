@@ -80,10 +80,26 @@ const buildChartDataRecovered = (data, casesRecovered) => {
   return chartDataRecovered;
 };
 
-export default function Graphic({ casesConfirmed, casesRecovered }) {
-  const [dataCases, setDataCases] = useState([]);
+const buildChartDataDeaths = (data, casesDeaths) => {
+  const chartDataDeaths = [];
+  for (let date in data.deaths) {
+    const newDataPoint = {
+      x: date,
+      y: data[casesDeaths][date],
+    };
+    chartDataDeaths.push(newDataPoint);
+  }
+  return chartDataDeaths;
+};
 
-  const [dataRecovered, seDataRecovered] = useState([]);
+export default function Graphic({
+  casesConfirmed,
+  casesRecovered,
+  casesDeaths,
+}) {
+  const [dataCases, setDataCases] = useState([]);
+  const [dataRecovered, setDataRecovered] = useState([]);
+  const [dataDeaths, setDataDeaths] = useState([]);
 
   const fetchGlobalCases = async () => {
     try {
@@ -113,7 +129,7 @@ export default function Graphic({ casesConfirmed, casesRecovered }) {
       console.log("data", data);
       const chartDataRecovered = buildChartDataRecovered(data, casesRecovered);
       console.log("chartDataDeaths", chartDataRecovered);
-      seDataRecovered(chartDataRecovered);
+      setDataRecovered(chartDataRecovered);
     } catch (error) {
       console.log(error);
     }
@@ -123,29 +139,53 @@ export default function Graphic({ casesConfirmed, casesRecovered }) {
     fetchGlobalRecoveries();
   }, [casesRecovered]);
 
+  const fetchGlobalCasesDeaths = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3077/api/byTimeAllCountries"
+      );
+      const data = await response.json();
+      const chartDataDeaths = buildChartDataDeaths(data, casesDeaths);
+      setDataDeaths(chartDataDeaths);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGlobalCasesDeaths();
+  }, [casesDeaths]);
+
   return (
     <div>
-      {dataCases.length > 0 && dataRecovered.length > 0 && (
-        <Line
-          className="line"
-          data={{
-            datasets: [
-              {
-                data: dataCases,
-                label: "Confirmed cases",
-                borderColor: "red",
-              },
+      {dataCases.length > 0 &&
+        dataRecovered.length > 0 &&
+        dataDeaths.length > 0 && (
+          <Line
+            className="line"
+            data={{
+              datasets: [
+                {
+                  data: dataCases,
+                  label: "Confirmed cases",
+                  borderColor: "red",
+                },
 
-              {
-                data: dataRecovered,
-                label: "Recovered",
-                borderColor: "green",
-              },
-            ],
-          }}
-          options={options}
-        />
-      )}
+                {
+                  data: dataRecovered,
+                  label: "Recovered",
+                  borderColor: "green",
+                },
+                {
+                  data: dataDeaths,
+                  label: "Deaths",
+                  borderColor: "#9B3133",
+                },
+              ],
+            }}
+            options={options}
+          />
+        )}
     </div>
   );
 }

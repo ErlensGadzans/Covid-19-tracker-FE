@@ -164,9 +164,6 @@ export default function MainPage() {
                 casesRecovered={casesRecovered}
               />
             </Col>
-            {/* <Col className="chart-container lg-col-6">
-              <GraphicDeaths className="Graphic" casesDeaths={casesDeaths} />
-            </Col> */}
           </Row>
         </Col>
 
@@ -180,27 +177,28 @@ export default function MainPage() {
         </Col>
       </Row>
 
-      <Row>
-        <Col className="col-3">
+      <Row className="display-flex justify-content-between">
+        <Col className="chart-container col-6">
+          <GraphicCases
+            className="Graphic"
+            casesConfirmed={casesConfirmed}
+            casesDeaths={casesDeaths}
+            casesRecovered={casesRecovered}
+          />
+        </Col>
+        <Col className="col-5">
           <Card className="casesByCountriesCard">
             <Card.Body className="casesByCountries">
               <Table countries={tableData} />
             </Card.Body>
           </Card>{" "}
         </Col>
-        <Col className="col-7">
-          <Map
-            className="worldMap"
-            countries={mapCountries}
-            center={mapCenter}
-            zoom={mapZoom}
-          />
-        </Col>
-        <Col className="globalDeathsAndRecoveries col-2">
+
+        {/* <Col className="globalDeathsAndRecoveries col-2">
           {<Table2 globalCases={globalCases} countries={tableData} />}
-        </Col>
+        </Col> */}
       </Row>
-      <Row className="Graphic  ">
+      {/* <Row className="Graphic  ">
         <Col className="chart-container lg-col-6">
           <GraphicCases
             className="Graphic"
@@ -212,7 +210,7 @@ export default function MainPage() {
         <Col className="chart-container lg-col-6">
           <GraphicDeaths className="Graphic" casesDeaths={casesDeaths} />
         </Col>
-      </Row>
+      </Row> */}
     </div>
   );
 }

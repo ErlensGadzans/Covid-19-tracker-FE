@@ -1,20 +1,25 @@
 .table {
   margin-top: 20px;
-  overflow: scroll;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   height: 400px;
   color: #222222;
 }
 .confirmedCases {
   color: red;
+  /* text-align: center; */
+}
+.deathCases {
+  color: #9b3133;
 }
 .countryName {
   color: lightgray;
 }
 
 .table tr {
-  display: flex;
-  justify-content: space-between;
+  /* display: flex;
+  justify-content: space-between; */
+  /* text-align: center; */
+  color: gray;
 }
 .table td {
   border-top: none;

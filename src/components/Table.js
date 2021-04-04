@@ -4,17 +4,39 @@ import numeral from "numeral";
 
 export default function Table({ countries }) {
   return (
-    <div className="table">
-      {countries.map(({ countryName, confirmedCases }) => (
+    <table className="table table-responsive ">
+      <thead>
         <tr>
-          <td className="countryName">{countryName}</td>
-          <td>
-            <strong className="confirmedCases">
-              {numeral(confirmedCases).format("0,0")}
-            </strong>
-          </td>
+          <th>Country</th>
+          <th>Total Confirmed</th>
+          <th>Total Recovered</th>
+          <th>Total Deaths</th>
         </tr>
-      ))}
-    </div>
+      </thead>
+      <tbody>
+        {countries.map(
+          ({ countryName, confirmedCases, recoveredCases, deathCases }) => (
+            <tr>
+              <td className="countryName">{countryName}</td>
+              <td>
+                <strong className="confirmedCases">
+                  {numeral(confirmedCases).format("0,0")}
+                </strong>
+              </td>
+              <td>
+                <strong className="recoveredCases">
+                  {numeral(recoveredCases).format("0,0")}
+                </strong>
+              </td>
+              <td>
+                <strong className="deathCases">
+                  {numeral(deathCases).format("0,0")}
+                </strong>
+              </td>
+            </tr>
+          )
+        )}
+      </tbody>
+    </table>
   );
 }
