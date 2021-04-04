@@ -8,13 +8,16 @@ body {
 }
 .globalCard {
   width: auto;
+  height: auto;
   display: flex !important;
   align-items: center;
   flex-direction: column !important;
   margin-top: 10px;
   margin-bottom: 10px;
+  margin-left: 10px;
   border-radius: 20px !important;
   background-color: #222222 !important;
+  padding: 3px;
 }
 
 .globalCasesNumber {
@@ -57,4 +60,15 @@ body {
 .app__dropdown {
   background-color: gray;
   border-radius: 10px;
+}
+
+.logoGlobaldataMenu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menuItems {
+  background-color: #222222 !important;
+  color: gray !important;
 }

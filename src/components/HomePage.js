@@ -10,6 +10,7 @@ import { sortData } from "./utilities";
 import numeral from "numeral";
 import Map from "./Map";
 import "leaflet/dist/leaflet.css";
+import logo from "../components/data/logo.png";
 
 export default function MainPage() {
   const [globalCases, setGlobalCases] = useState([]);
@@ -20,7 +21,7 @@ export default function MainPage() {
   const [casesRecovered, setCasesRecovered] = useState("recovered");
   const [casesDeaths, setCasesDeaths] = useState("deaths");
   const [singleCountry, setSingleCountry] = useState("worldwide");
-  const [mapCenter, setMapCenter] = useState([51.505, -0.09]);
+  const [mapCenter, setMapCenter] = useState([50, -0.09]);
   const [mapZoom, setMapZoom] = useState(2);
 
   const fetchGlobalCases = async () => {
@@ -76,42 +77,111 @@ export default function MainPage() {
     setMapZoom(5);
   };
 
-  console.log({ mapCenter, mapZoom });
+  // console.log({ mapCenter, mapZoom });
   return (
     <div className="app">
-      <div>Covid-19 trackeer</div>
-      <div className="appHeader">
-        <FormControl className="app__dropdown">
-          <Select
-            variant="outlined"
-            value={singleCountry}
-            onChange={getCountry}
-          >
-            <MenuItem value="worldwide">Worldwide</MenuItem>
-            {countries.map((country) => (
-              <MenuItem key={country.countryName} value={country.countryName}>
-                {country.countryName}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </div>
+      <Row className="display-flex">
+        <Col className="col-7">
+          <Row className="logoGlobaldataMenu">
+            <div className="logo ml-3">
+              <img style={{ height: "65px" }} src={logo} />
+            </div>
+
+            <Card className="globalCard">
+              <Card.Body className="globalCases">
+                <Card.Title>
+                  <small>Global Cases</small>
+                </Card.Title>
+                <Card.Subtitle className="globalCasesNumber">
+                  <div>
+                    <h3>{numeral(globalCases.cases).format("0,0")}</h3>
+                  </div>
+                </Card.Subtitle>
+              </Card.Body>
+            </Card>
+            <Card className="globalCard">
+              <Card.Body className="globalCases">
+                <Card.Title>
+                  <small>Global Recovered</small>
+                </Card.Title>
+                <Card.Subtitle
+                  className="globalCasesNumber"
+                  style={{ color: "green" }}
+                >
+                  <div>
+                    <h3>{numeral(globalCases.recovered).format("0,0")}</h3>
+                  </div>
+                </Card.Subtitle>
+              </Card.Body>
+            </Card>
+            <Card className="globalCard">
+              <Card.Body className="globalCases">
+                <Card.Title>
+                  <small>Global Deaths</small>
+                </Card.Title>
+                <Card.Subtitle
+                  className="globalCasesNumber"
+                  style={{ color: "#9B3133" }}
+                >
+                  <div>
+                    <h3>{numeral(globalCases.deaths).format("0,0")}</h3>
+                  </div>
+                </Card.Subtitle>
+              </Card.Body>
+            </Card>
+            <div className="appHeader ml-2">
+              <FormControl className="app__dropdown">
+                <Select
+                  variant="outlined"
+                  value={singleCountry}
+                  onChange={getCountry}
+                >
+                  <MenuItem
+                    value="worldwide"
+                    style={{ backgroundColor: "#222222", color: "gray" }}
+                  >
+                    Worldwide
+                  </MenuItem>
+                  {countries.map((country) => (
+                    <MenuItem
+                      className="menuItems"
+                      key={country.countryName}
+                      value={country.countryName}
+                    >
+                      {country.countryName}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+          </Row>
+          <Row className="Graphic  ">
+            <Col className="chart-container lg-col-6">
+              <GraphicCases
+                className="Graphic"
+                casesConfirmed={casesConfirmed}
+                casesDeaths={casesDeaths}
+                casesRecovered={casesRecovered}
+              />
+            </Col>
+            {/* <Col className="chart-container lg-col-6">
+              <GraphicDeaths className="Graphic" casesDeaths={casesDeaths} />
+            </Col> */}
+          </Row>
+        </Col>
+
+        <Col className="col-5">
+          <Map
+            className="worldMap"
+            countries={mapCountries}
+            center={mapCenter}
+            zoom={mapZoom}
+          />
+        </Col>
+      </Row>
 
       <Row>
         <Col className="col-3">
-          <Card className="globalCard">
-            <Card.Body className="globalCases">
-              <Card.Title>
-                <small>Global Cases</small>
-              </Card.Title>
-              <Card.Subtitle className="globalCasesNumber">
-                <div>
-                  <h3>{numeral(globalCases.cases).format("0,0")}</h3>
-                </div>
-                ))
-              </Card.Subtitle>
-            </Card.Body>
-          </Card>
           <Card className="casesByCountriesCard">
             <Card.Body className="casesByCountries">
               <Table countries={tableData} />
