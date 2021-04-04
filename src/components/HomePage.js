@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import NavBar from "./NavBar";
 import { Card, Row, Col } from "react-bootstrap";
 import { FormControl, Select, MenuItem } from "@material-ui/core";
 import Table from "./Table";
@@ -23,6 +22,7 @@ export default function MainPage() {
   const [singleCountry, setSingleCountry] = useState("worldwide");
   const [mapCenter, setMapCenter] = useState([50, -0.09]);
   const [mapZoom, setMapZoom] = useState(2);
+  const [country, setCountry] = useState({});
 
   const fetchGlobalCases = async () => {
     try {
@@ -68,13 +68,23 @@ export default function MainPage() {
 
   const getCountry = async (event) => {
     const countryName = event.target.value;
-    const fetchCountry = await fetch(
-      `https://disease.sh/v3/covid-19/countries/${countryName}`
-      // `http://localhost:3077/api/countries/${countryName}`
-    );
+
+    const url =
+      countryName === "worldwide"
+        ? "https://disease.sh/v3/covid-19/all"
+        : `https://disease.sh/v3/covid-19/countries/${countryName}`;
+
+    const fetchCountry = await fetch(url);
+
     const data = await fetchCountry.json();
+    console.log("NEEEEEEEERWWWWWW", data);
     setSingleCountry(countryName);
-    setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+    setCountry({
+      confirmed: data.cases,
+      recovered: data.recovered,
+      deaths: data.deaths,
+    });
+    // setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
     setMapZoom(5);
   };
 
@@ -91,11 +101,11 @@ export default function MainPage() {
             <Card className="globalCard">
               <Card.Body className="globalCases">
                 <Card.Title>
-                  <small>Global Cases</small>
+                  <small>Confirmed Cases</small>
                 </Card.Title>
                 <Card.Subtitle className="globalCasesNumber">
                   <div>
-                    <h3>{numeral(globalCases.cases).format("0,0")}</h3>
+                    <h3>{numeral(country.confirmed).format("0,0")}</h3>
                   </div>
                 </Card.Subtitle>
               </Card.Body>
@@ -103,14 +113,14 @@ export default function MainPage() {
             <Card className="globalCard">
               <Card.Body className="globalCases">
                 <Card.Title>
-                  <small>Global Recovered</small>
+                  <small>Recovered</small>
                 </Card.Title>
                 <Card.Subtitle
                   className="globalCasesNumber"
                   style={{ color: "green" }}
                 >
                   <div>
-                    <h3>{numeral(globalCases.recovered).format("0,0")}</h3>
+                    <h3>{numeral(country.recovered).format("0,0")}</h3>
                   </div>
                 </Card.Subtitle>
               </Card.Body>
@@ -118,14 +128,14 @@ export default function MainPage() {
             <Card className="globalCard">
               <Card.Body className="globalCases">
                 <Card.Title>
-                  <small>Global Deaths</small>
+                  <small>Deaths</small>
                 </Card.Title>
                 <Card.Subtitle
                   className="globalCasesNumber"
                   style={{ color: "#9B3133" }}
                 >
                   <div>
-                    <h3>{numeral(globalCases.deaths).format("0,0")}</h3>
+                    <h3>{numeral(country.deaths).format("0,0")}</h3>
                   </div>
                 </Card.Subtitle>
               </Card.Body>
