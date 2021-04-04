@@ -15,7 +15,13 @@ export default function Table({ countries }) {
       </thead>
       <tbody>
         {countries.map(
-          ({ countryName, confirmedCases, recoveredCases, deathCases }) => (
+          ({
+            countryName,
+            confirmedCases,
+            recoveredCases,
+            deathCases,
+            countryFlag,
+          }) => (
             <tr>
               <td className="countryName">{countryName}</td>
               <td>

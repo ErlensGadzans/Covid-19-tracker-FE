@@ -5,7 +5,7 @@ import { FormControl, Select, MenuItem } from "@material-ui/core";
 import Table from "./Table";
 import Table2 from "./Table2";
 import GraphicCases from "./GraphicCases";
-import GraphicDeaths from "./GraphicDeaths";
+import GraphicDailyCases from "./GraphicDailyCases";
 import { sortData } from "./utilities";
 import numeral from "numeral";
 import Map from "./Map";
@@ -43,12 +43,13 @@ export default function MainPage() {
     try {
       const response = await fetch("http://localhost:3077/api/allcountries");
       const data = await response.json();
-      // console.log("ALL COUNTRIES:", data);
+      console.log("ALL COUNTRIES:", data);
       const countries = data.map((country) => ({
         countryName: country.country,
         confirmedCases: country.cases,
         deathCases: country.deaths,
         recoveredCases: country.recovered,
+        countryFlag: country.countryInfo.flag,
       }));
       const sortedData = sortData(countries);
       setTableData(sortedData);
@@ -179,7 +180,7 @@ export default function MainPage() {
 
       <Row className="display-flex justify-content-between">
         <Col className="chart-container col-6">
-          <GraphicCases
+          <GraphicDailyCases
             className="Graphic"
             casesConfirmed={casesConfirmed}
             casesDeaths={casesDeaths}
@@ -193,24 +194,7 @@ export default function MainPage() {
             </Card.Body>
           </Card>{" "}
         </Col>
-
-        {/* <Col className="globalDeathsAndRecoveries col-2">
-          {<Table2 globalCases={globalCases} countries={tableData} />}
-        </Col> */}
       </Row>
-      {/* <Row className="Graphic  ">
-        <Col className="chart-container lg-col-6">
-          <GraphicCases
-            className="Graphic"
-            casesConfirmed={casesConfirmed}
-            casesDeaths={casesDeaths}
-            casesRecovered={casesRecovered}
-          />
-        </Col>
-        <Col className="chart-container lg-col-6">
-          <GraphicDeaths className="Graphic" casesDeaths={casesDeaths} />
-        </Col>
-      </Row> */}
     </div>
   );
 }
