@@ -104,7 +104,7 @@ export default function Graphic({
   const fetchGlobalCases = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3077/api/byTimeAllCountries"
+        "https://disease.sh/v3/covid-19/historical/all?lastdays=360"
       );
       const data = await response.json();
       // console.log("data", data);
@@ -123,7 +123,7 @@ export default function Graphic({
   const fetchGlobalRecoveries = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3077/api/byTimeAllCountries"
+        "https://disease.sh/v3/covid-19/historical/all?lastdays=360"
       );
       const data = await response.json();
       console.log("data", data);
@@ -142,7 +142,7 @@ export default function Graphic({
   const fetchGlobalCasesDeaths = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3077/api/byTimeAllCountries"
+        "https://disease.sh/v3/covid-19/historical/all?lastdays=360"
       );
       const data = await response.json();
       const chartDataDeaths = buildChartDataDeaths(data, casesDeaths);

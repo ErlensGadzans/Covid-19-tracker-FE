@@ -117,7 +117,7 @@ export default function Graphic({
         "https://disease.sh/v3/covid-19/historical/all?lastdays=100"
       );
       const data = await response.json();
-      // console.log("data", data);
+      console.log("DATAAAAA CASES LAST 100 DAYS", data);
       const chartDataCases = buildChartDataCases(data, casesConfirmed);
       console.log("chartDataCases", chartDataCases);
       setDataCases(chartDataCases);

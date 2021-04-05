@@ -28,7 +28,7 @@ export default function MainPage() {
     try {
       const response = await fetch("http://localhost:3077/api/totals");
       const data = await response.json();
-      // console.log("GLOBAL DATA:", data);
+      console.log("GLOBAL DATA:", data);
       setGlobalCases(data);
     } catch (error) {
       console.log(error);
@@ -41,7 +41,7 @@ export default function MainPage() {
 
   const fetchCountriesData = async () => {
     try {
-      const response = await fetch("http://localhost:3077/api/allcountries");
+      const response = await fetch("https://disease.sh/v3/covid-19/countries");
       const data = await response.json();
       console.log("ALL COUNTRIES:", data);
       const countries = data.map((country) => ({
@@ -79,25 +79,46 @@ export default function MainPage() {
     const data = await fetchCountry.json();
     console.log("NEEEEEEEERWWWWWW", data);
     setSingleCountry(countryName);
+    console.log("COUNTRY NAME", countryName);
     setCountry({
       confirmed: data.cases,
       recovered: data.recovered,
       deaths: data.deaths,
     });
-    // setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+    setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
     setMapZoom(5);
   };
 
   // console.log({ mapCenter, mapZoom });
   return (
     <div className="app">
-      <Row className="display-flex">
+      <Row className="">
         <Col className="col-7">
           <Row className="logoGlobaldataMenu">
-            <div className="logo ml-3">
-              <img style={{ height: "65px" }} src={logo} />
-            </div>
-
+            <img style={{ height: "65px" }} src={logo} />
+            <FormControl className="app__dropdown">
+              <Select
+                variant="outlined"
+                value={singleCountry}
+                onChange={getCountry}
+              >
+                <MenuItem
+                  value="worldwide"
+                  style={{ backgroundColor: "#222222", color: "gray" }}
+                >
+                  Worldwide
+                </MenuItem>
+                {countries.map((country) => (
+                  <MenuItem
+                    className="menuItems"
+                    key={country.countryName}
+                    value={country.countryName}
+                  >
+                    {country.countryName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <Card className="globalCard">
               <Card.Body className="globalCases">
                 <Card.Title>
@@ -140,34 +161,9 @@ export default function MainPage() {
                 </Card.Subtitle>
               </Card.Body>
             </Card>
-            <div className="appHeader ml-2">
-              <FormControl className="app__dropdown">
-                <Select
-                  variant="outlined"
-                  value={singleCountry}
-                  onChange={getCountry}
-                >
-                  <MenuItem
-                    value="worldwide"
-                    style={{ backgroundColor: "#222222", color: "gray" }}
-                  >
-                    Worldwide
-                  </MenuItem>
-                  {countries.map((country) => (
-                    <MenuItem
-                      className="menuItems"
-                      key={country.countryName}
-                      value={country.countryName}
-                    >
-                      {country.countryName}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
           </Row>
-          <Row className="Graphic  ">
-            <Col className="chart-container lg-col-6">
+          <Row className="Graphic">
+            <Col className="chart-container">
               <GraphicCases
                 className="Graphic"
                 casesConfirmed={casesConfirmed}
@@ -178,7 +174,7 @@ export default function MainPage() {
           </Row>
         </Col>
 
-        <Col className="col-5">
+        <Col className="">
           <Map
             className="worldMap"
             countries={mapCountries}
@@ -188,8 +184,8 @@ export default function MainPage() {
         </Col>
       </Row>
 
-      <Row className="display-flex justify-content-between">
-        <Col className="chart-container col-6">
+      <Row>
+        <Col className="chart-container col-7 ">
           <GraphicDailyCases
             className="Graphic"
             casesConfirmed={casesConfirmed}
@@ -197,7 +193,7 @@ export default function MainPage() {
             casesRecovered={casesRecovered}
           />
         </Col>
-        <Col className="col-5">
+        <Col className="tableAllCountries col-5">
           <Card className="casesByCountriesCard">
             <Card.Body className="casesByCountries">
               <Table countries={tableData} />
