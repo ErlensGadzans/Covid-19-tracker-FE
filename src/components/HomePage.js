@@ -26,10 +26,11 @@ export default function MainPage() {
 
   const fetchGlobalCases = async () => {
     try {
-      const response = await fetch("http://localhost:3077/api/totals");
+      const response = await fetch("https://disease.sh/v3/covid-19/all");
       const data = await response.json();
       console.log("GLOBAL DATA:", data);
       setGlobalCases(data);
+      console.log("GLOBAL CASES:", data);
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +68,7 @@ export default function MainPage() {
   }, []);
 
   const getCountry = async (event) => {
-    const countryName = event.target.value;
+    const countryName = event.target.value || "worldwide";
 
     const url =
       countryName === "worldwide"
@@ -79,7 +80,7 @@ export default function MainPage() {
     const data = await fetchCountry.json();
     console.log("NEEEEEEEERWWWWWW", data);
     setSingleCountry(countryName);
-    console.log("COUNTRY NAME", countryName);
+    // console.log("COUNTRY NAME", countryName);
     setCountry({
       confirmed: data.cases,
       recovered: data.recovered,
@@ -93,7 +94,7 @@ export default function MainPage() {
   return (
     <div className="app">
       <Row className="">
-        <Col className="col-7">
+        <Col className="col-8">
           <Row className="logoGlobaldataMenu">
             <img style={{ height: "65px" }} src={logo} />
             <FormControl className="app__dropdown">
@@ -126,7 +127,11 @@ export default function MainPage() {
                 </Card.Title>
                 <Card.Subtitle className="globalCasesNumber">
                   <div>
-                    <h3>{numeral(country.confirmed).format("0,0")}</h3>
+                    <h3>
+                      {singleCountry === "worldwide"
+                        ? numeral(globalCases.cases).format("0,0")
+                        : numeral(country.confirmed).format("0,0")}
+                    </h3>
                   </div>
                 </Card.Subtitle>
               </Card.Body>
@@ -141,7 +146,11 @@ export default function MainPage() {
                   style={{ color: "green" }}
                 >
                   <div>
-                    <h3>{numeral(country.recovered).format("0,0")}</h3>
+                    <h3>
+                      {singleCountry === "worldwide"
+                        ? numeral(globalCases.recovered).format("0,0")
+                        : numeral(country.recovered).format("0,0")}
+                    </h3>
                   </div>
                 </Card.Subtitle>
               </Card.Body>
@@ -156,44 +165,57 @@ export default function MainPage() {
                   style={{ color: "#9B3133" }}
                 >
                   <div>
-                    <h3>{numeral(country.deaths).format("0,0")}</h3>
+                    <h3>
+                      {singleCountry === "worldwide"
+                        ? numeral(globalCases.deaths).format("0,0")
+                        : numeral(country.deaths).format("0,0")}
+                    </h3>
                   </div>
                 </Card.Subtitle>
               </Card.Body>
             </Card>
           </Row>
           <Row className="Graphic">
-            <Col className="chart-container">
-              <GraphicCases
-                className="Graphic"
+            <Col className="">
+              <Map
+                className="worldMap"
+                countries={mapCountries}
+                center={mapCenter}
+                zoom={mapZoom}
+              />
+            </Col>
+          </Row>
+        </Col>
+        <Col className="col-4">
+          <Col className="chart-container ">
+            <GraphicCases
+              className="chart-container"
+              casesConfirmed={casesConfirmed}
+              casesDeaths={casesDeaths}
+              casesRecovered={casesRecovered}
+            />
+            <Col className="chart-container mt-5">
+              <GraphicDailyCases
+                className="chart-container"
                 casesConfirmed={casesConfirmed}
                 casesDeaths={casesDeaths}
                 casesRecovered={casesRecovered}
               />
             </Col>
-          </Row>
-        </Col>
-
-        <Col className="">
-          <Map
-            className="worldMap"
-            countries={mapCountries}
-            center={mapCenter}
-            zoom={mapZoom}
-          />
+          </Col>
         </Col>
       </Row>
 
       <Row>
-        <Col className="chart-container col-7 ">
-          <GraphicDailyCases
+        <Col className=" col-8 ">
+          {/* <GraphicDailyCases
             className="Graphic"
             casesConfirmed={casesConfirmed}
             casesDeaths={casesDeaths}
             casesRecovered={casesRecovered}
-          />
+          /> */}
         </Col>
-        <Col className="tableAllCountries col-5">
+        <Col className="tableAllCountries col-4">
           <Card className="casesByCountriesCard">
             <Card.Body className="casesByCountries">
               <Table countries={tableData} />

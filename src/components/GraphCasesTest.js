@@ -15,7 +15,7 @@ const options = {
 
   elements: {
     point: {
-      radius: 3,
+      radius: 2,
     },
   },
   maintainAspectRatio: true,
@@ -26,7 +26,7 @@ const options = {
     backgroundColor: "black",
     callbacks: {
       label: function (tooltipItem) {
-        return numeral(tooltipItem.value).format("+0,0");
+        return numeral(tooltipItem.value).format("0,0");
       },
     },
   },
@@ -56,48 +56,38 @@ const options = {
 
 const buildChartDataCases = (data, casesConfirmed) => {
   const chartDataCases = [];
-  let lastDataPiont;
+
   for (let date in data.cases) {
-    if (lastDataPiont) {
-      const newDataPoint = {
-        x: date,
-        y: data[casesConfirmed][date] - lastDataPiont,
-      };
-      chartDataCases.push(newDataPoint);
-    }
-    lastDataPiont = data[casesConfirmed][date];
+    const newDataPoint = {
+      x: date,
+      y: data[casesConfirmed][date],
+    };
+    chartDataCases.push(newDataPoint);
   }
   return chartDataCases;
 };
 
 const buildChartDataRecovered = (data, casesRecovered) => {
   const chartDataRecovered = [];
-  let lastDataPoint;
+
   for (let date in data.recovered) {
-    if (lastDataPoint) {
-      const newDataPoint = {
-        x: date,
-        y: data[casesRecovered][date] - lastDataPoint,
-      };
-      chartDataRecovered.push(newDataPoint);
-    }
-    lastDataPoint = data[casesRecovered][date];
+    const newDataPoint = {
+      x: date,
+      y: data[casesRecovered][date],
+    };
+    chartDataRecovered.push(newDataPoint);
   }
   return chartDataRecovered;
 };
 
 const buildChartDataDeaths = (data, casesDeaths) => {
   const chartDataDeaths = [];
-  let lastDataPoint;
   for (let date in data.deaths) {
-    if (lastDataPoint) {
-      const newDataPoint = {
-        x: date,
-        y: data[casesDeaths][date] - lastDataPoint,
-      };
-      chartDataDeaths.push(newDataPoint);
-    }
-    lastDataPoint = data[casesDeaths][date];
+    const newDataPoint = {
+      x: date,
+      y: data[casesDeaths][date],
+    };
+    chartDataDeaths.push(newDataPoint);
   }
   return chartDataDeaths;
 };
@@ -114,10 +104,10 @@ export default function Graphic({
   const fetchGlobalCases = async () => {
     try {
       const response = await fetch(
-        "https://disease.sh/v3/covid-19/historical/all?lastdays=100"
+        "https://disease.sh/v3/covid-19/historical/latvia?lastdays=360"
       );
       const data = await response.json();
-      console.log("DATAAAAA CASES LAST 100 DAYS", data);
+      // console.log("data", data);
       const chartDataCases = buildChartDataCases(data, casesConfirmed);
       console.log("chartDataCases", chartDataCases);
       setDataCases(chartDataCases);
@@ -133,7 +123,7 @@ export default function Graphic({
   const fetchGlobalRecoveries = async () => {
     try {
       const response = await fetch(
-        "https://disease.sh/v3/covid-19/historical/all?lastdays=100"
+        "https://disease.sh/v3/covid-19/historical/all?lastdays=360"
       );
       const data = await response.json();
       console.log("data", data);
@@ -152,7 +142,7 @@ export default function Graphic({
   const fetchGlobalCasesDeaths = async () => {
     try {
       const response = await fetch(
-        "https://disease.sh/v3/covid-19/historical/all?lastdays=100"
+        "https://disease.sh/v3/covid-19/historical/all?lastdays=360"
       );
       const data = await response.json();
       const chartDataDeaths = buildChartDataDeaths(data, casesDeaths);
