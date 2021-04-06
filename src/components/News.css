@@ -1,0 +1,10 @@
+.card {
+  flex-direction: column;
+}
+.card img {
+  width: 20%;
+}
+
+.cardNews {
+  margin-top: 10px;
+}

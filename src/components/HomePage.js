@@ -10,6 +10,7 @@ import numeral from "numeral";
 import Map from "./Map";
 import "leaflet/dist/leaflet.css";
 import logo from "../components/data/logo.png";
+import News from "./News";
 
 export default function MainPage() {
   const [globalCases, setGlobalCases] = useState([]);
@@ -23,6 +24,7 @@ export default function MainPage() {
   const [mapCenter, setMapCenter] = useState([50, -0.09]);
   const [mapZoom, setMapZoom] = useState(2);
   const [country, setCountry] = useState({});
+  const [news, setNews] = useState([]);
 
   const fetchGlobalCases = async () => {
     try {
@@ -207,13 +209,8 @@ export default function MainPage() {
       </Row>
 
       <Row>
-        <Col className=" col-8 ">
-          {/* <GraphicDailyCases
-            className="Graphic"
-            casesConfirmed={casesConfirmed}
-            casesDeaths={casesDeaths}
-            casesRecovered={casesRecovered}
-          /> */}
+        <Col className="col-8">
+          <News news={news} />
         </Col>
         <Col className="tableAllCountries col-4">
           <Card className="casesByCountriesCard">
