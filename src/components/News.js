@@ -35,7 +35,7 @@ export default function News(news) {
             <Card.Body>
               <Card.Title>{news.title}</Card.Title>
               <Card.Text>{news.content}</Card.Text>
-              <Button variant="primary" href={news.url} target="_blank">
+              <Button variant="danger" href={news.url} target="_blank">
                 Read more
               </Button>
             </Card.Body>
