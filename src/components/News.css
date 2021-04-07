@@ -1,13 +1,19 @@
 .cardNews {
-  flex-direction: column;
+  /* flex-direction: column; */
   overflow-x: hidden;
-  height: 470px;
+  overflow-y: scroll;
+  height: 550px !important;
   background-color: #222222;
   padding: 1rem;
   border-radius: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.cardNews.card {
+  height: 100%;
+}
+
 .card-text {
   color: gray;
 }

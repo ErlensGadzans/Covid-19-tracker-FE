@@ -5,9 +5,9 @@ import "./Graphic.css";
 
 const options = {
   title: {
-    display: false,
+    display: true,
     position: "top",
-    text: "Global cases",
+    text: "Past 100 days chart",
   },
   legend: {
     display: true,
@@ -15,7 +15,7 @@ const options = {
 
   elements: {
     point: {
-      radius: 3,
+      radius: 2,
     },
   },
   maintainAspectRatio: true,
