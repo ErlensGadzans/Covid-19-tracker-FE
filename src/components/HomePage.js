@@ -11,6 +11,7 @@ import Map from "./Map";
 import "leaflet/dist/leaflet.css";
 import logo from "../components/data/logo.png";
 import News from "./News";
+import GraphicVaccine from "./GraphicVaccine";
 
 export default function MainPage() {
   const [globalCases, setGlobalCases] = useState([]);
@@ -25,6 +26,7 @@ export default function MainPage() {
   const [mapZoom, setMapZoom] = useState(2);
   const [country, setCountry] = useState({});
   const [news, setNews] = useState([]);
+  const [vaccine, setVaccine] = useState([]);
 
   const fetchGlobalCases = async () => {
     try {
@@ -188,22 +190,21 @@ export default function MainPage() {
             </Col>
           </Row>
         </Col>
-        <Col className="col-4">
-          <Col className="chart-container ">
+        <Col className="col-4 ">
+          <Col className="charts ">
             <GraphicCases
+              className="chart-container "
+              casesConfirmed={casesConfirmed}
+              casesDeaths={casesDeaths}
+              casesRecovered={casesRecovered}
+            />
+            <GraphicDailyCases
               className="chart-container"
               casesConfirmed={casesConfirmed}
               casesDeaths={casesDeaths}
               casesRecovered={casesRecovered}
             />
-            <Col className="chart-container mt-5">
-              <GraphicDailyCases
-                className="chart-container"
-                casesConfirmed={casesConfirmed}
-                casesDeaths={casesDeaths}
-                casesRecovered={casesRecovered}
-              />
-            </Col>
+            <GraphicVaccine className="chart-container" vaccine={vaccine} />
           </Col>
         </Col>
       </Row>

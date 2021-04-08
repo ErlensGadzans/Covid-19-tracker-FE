@@ -28,26 +28,27 @@ export default function News(news) {
   return (
     <div>
       <Card className="cardNews" style={{ width: "auto" }}>
-        {newsData.map((news) => (
-          <>
-            <div>
-              <Card.Img variant="top" src={news.urlToImage} alt="" />
+        {Array.isArray(newsData) &&
+          newsData.map((news) => (
+            <>
+              <div>
+                <Card.Img variant="top" src={news.urlToImage} alt="" />
 
-              <Card.Body>
-                <Card.Title>{news.title}</Card.Title>
-                <Card.Text>{news.content}</Card.Text>
-                <Button variant="danger" href={news.url} target="_blank">
-                  Read more
-                </Button>
-              </Card.Body>
-              <Card.Footer>
-                <small className="text-muted">
-                  Source: {news.source.name}{" "}
-                </small>
-              </Card.Footer>
-            </div>
-          </>
-        ))}
+                <Card.Body>
+                  <Card.Title>{news.title}</Card.Title>
+                  <Card.Text>{news.content}</Card.Text>
+                  <Button variant="danger" href={news.url} target="_blank">
+                    Read more
+                  </Button>
+                </Card.Body>
+                <Card.Footer>
+                  <small className="text-muted">
+                    Source: {news.source.name}{" "}
+                  </small>
+                </Card.Footer>
+              </div>
+            </>
+          ))}
       </Card>
     </div>
   );

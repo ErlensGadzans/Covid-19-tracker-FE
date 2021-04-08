@@ -1,7 +1,8 @@
 .table {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   /* overflow-x: hidden; */
   height: 470px;
+  width: auto !important;
   color: #222222;
 }
 .confirmedCases {

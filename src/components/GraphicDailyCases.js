@@ -7,7 +7,7 @@ const options = {
   title: {
     display: true,
     position: "top",
-    text: "Past 100 days chart",
+    text: "Daily cases for past 100 days",
   },
   legend: {
     display: true,
