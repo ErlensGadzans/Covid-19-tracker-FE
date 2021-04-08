@@ -147,7 +147,7 @@ export default function MainPage() {
                 </Card.Title>
                 <Card.Subtitle
                   className="globalCasesNumber"
-                  style={{ color: "green" }}
+                  style={{ color: "#9ccc65" }}
                 >
                   <div>
                     <h3>
@@ -210,7 +210,7 @@ export default function MainPage() {
       </Row>
 
       <Row>
-        <Col className="col-8">
+        <Col className="newsColumn col-8">
           <News news={news} />
         </Col>
         <Col className="tableAllCountries col-4">

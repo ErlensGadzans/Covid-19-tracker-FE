@@ -39,8 +39,9 @@ export default function Map({ countries, center, zoom }) {
             <>
               <Circle
                 center={[country.countryInfo.lat, country.countryInfo.long]}
-                pathOptions={{ color: "red" }}
-                fillOpacity={0.3}
+                pathOptions={{ color: "#ef5350" }}
+                fillOpacity={0.4}
+                stroke={true}
                 radius={calculateRadius(country.cases, maximum)}
               >
                 <Popup className="popUp">

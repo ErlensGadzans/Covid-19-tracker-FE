@@ -1,12 +1,19 @@
 .table {
   /* margin-top: 20px; */
   /* overflow-x: hidden; */
-  height: 470px;
+  height: 495px;
   width: auto !important;
-  color: #222222;
+  /* color: #222222; */
+  /* background: rgb(0, 0, 0);
+  background: linear-gradient(
+    47deg,
+    rgba(0, 0, 0, 1) 61%,
+    rgba(128, 128, 128, 1) 100%
+  ); */
+  /* border-radius: 20px; */
 }
 .confirmedCases {
-  color: red;
+  color: #ef5350;
   /* text-align: center; */
 }
 .deathCases {

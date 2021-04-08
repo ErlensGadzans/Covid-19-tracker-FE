@@ -23,7 +23,7 @@ const options = {
     mode: "nearest",
     intersect: false,
 
-    backgroundColor: "black",
+    backgroundColor: "#474747",
     callbacks: {
       label: function (tooltipItem) {
         return numeral(tooltipItem.value).format("0,0");
@@ -168,13 +168,13 @@ export default function Graphic({
                 {
                   data: dataCases,
                   label: "Confirmed cases",
-                  borderColor: "red",
+                  borderColor: "#ef5350",
                 },
 
                 {
                   data: dataRecovered,
                   label: "Recovered",
-                  borderColor: "green",
+                  borderColor: "#9ccc65",
                 },
                 {
                   data: dataDeaths,

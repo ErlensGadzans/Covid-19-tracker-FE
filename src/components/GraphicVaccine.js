@@ -23,7 +23,7 @@ const options = {
     mode: "nearest",
     intersect: false,
 
-    backgroundColor: "black",
+    backgroundColor: "#474747",
     callbacks: {
       label: function (tooltipItem) {
         return numeral(tooltipItem.value).format("0,0");

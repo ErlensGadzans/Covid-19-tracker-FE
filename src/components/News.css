@@ -3,10 +3,14 @@
   overflow-x: hidden;
   overflow-y: scroll;
   height: 550px !important;
-  background-color: #222222;
-  padding: 1rem;
-  border-radius: 20px;
-  margin-top: 10px;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    47deg,
+    rgba(0, 0, 0, 1) 61%,
+    rgba(128, 128, 128, 1) 100%
+  );
+  padding: 2rem;
+  margin-top: 10px !important;
   margin-bottom: 10px;
 }
 
@@ -27,4 +31,7 @@
 
 .cardNews {
   margin-top: 10px;
+}
+.btn {
+  background-color: #ef5350 !important;
 }

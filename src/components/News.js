@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, CardDeck } from "react-bootstrap";
-import logo from "../components/data/logo.png";
 import "./News.css";
 
 export default function News(news) {
