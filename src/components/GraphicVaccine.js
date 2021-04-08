@@ -7,7 +7,7 @@ const options = {
   title: {
     display: false,
     position: "top",
-    text: "Global vaccinated cases",
+    text: "Vaccine doses have been administered",
   },
   legend: {
     display: true,
@@ -60,7 +60,7 @@ const buildChartData = (data, vaccine) => {
   for (let date in data) {
     const newDataPoint = {
       x: date,
-      y: [vaccine][date],
+      y: data[date],
     };
     chartDataVaccine.push(newDataPoint);
   }
@@ -98,8 +98,8 @@ export default function Graphic(vaccine) {
             datasets: [
               {
                 data: dataVaccine,
-                label: "Vaccinated cases",
-                borderColor: "blue",
+                label: "Vaccine doses have been administered",
+                borderColor: "#039be5",
               },
             ],
           }}
