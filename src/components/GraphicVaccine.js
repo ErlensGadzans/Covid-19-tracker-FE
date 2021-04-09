@@ -54,31 +54,45 @@ const options = {
   },
 };
 
-const buildChartData = (data, vaccine) => {
-  const chartDataVaccine = [];
-
-  for (let date in data) {
-    const newDataPoint = {
-      x: date,
-      y: data[date],
-    };
-    chartDataVaccine.push(newDataPoint);
+const buildChartData = (data, vaccine, singleCountry) => {
+  if (singleCountry === "worldwide") {
+    const chartDataVaccine = [];
+    for (let date in data) {
+      const newDataPoint = {
+        x: date,
+        y: data[date],
+      };
+      chartDataVaccine.push(newDataPoint);
+    }
+    return chartDataVaccine;
+  } else {
+    const chartDataVaccine = [];
+    for (let date in data.timeline) {
+      const newDataPoint = {
+        x: date,
+        y: data.timeline[date],
+      };
+      chartDataVaccine.push(newDataPoint);
+    }
+    return chartDataVaccine;
   }
-  return chartDataVaccine;
 };
 
-export default function Graphic(vaccine) {
+export default function Graphic({ vaccine, singleCountry }) {
   const [dataVaccine, setDataVaccine] = useState([]);
 
   const fetchGlobalVaccineCases = async () => {
     try {
-      const response = await fetch(
-        "https://disease.sh/v3/covid-19/vaccine/coverage"
-      );
+      const url =
+        singleCountry === "worldwide"
+          ? "https://disease.sh/v3/covid-19/vaccine/coverage"
+          : `https://disease.sh/v3/covid-19/vaccine/coverage/countries/${singleCountry}`;
+
+      const response = await fetch(url);
       const data = await response.json();
-      // console.log("VACCINE", data);
-      const chartDataVaccine = buildChartData(data, vaccine);
-      // console.log("chartDataVaccine", chartDataVaccine);
+      console.log("VACCINE", data);
+      const chartDataVaccine = buildChartData(data, vaccine, singleCountry);
+      console.log("chartDataVaccine", chartDataVaccine);
       setDataVaccine(chartDataVaccine);
     } catch (error) {
       console.log(error);
@@ -87,7 +101,7 @@ export default function Graphic(vaccine) {
 
   useEffect(() => {
     fetchGlobalVaccineCases();
-  }, [vaccine]);
+  }, [vaccine, singleCountry]);
 
   return (
     <div>

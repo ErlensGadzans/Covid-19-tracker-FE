@@ -206,7 +206,11 @@ export default function MainPage() {
               casesRecovered={casesRecovered}
               singleCountry={singleCountry}
             />
-            <GraphicVaccine className="chart-container" vaccine={vaccine} />
+            <GraphicVaccine
+              className="chart-container"
+              vaccine={vaccine}
+              singleCountry={singleCountry}
+            />
           </Col>
         </Col>
       </Row>
