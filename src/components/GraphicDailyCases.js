@@ -54,58 +54,107 @@ const options = {
   },
 };
 
-const buildChartDataCases = (data, casesConfirmed) => {
-  const chartDataCases = [];
-  let lastDataPiont;
-  for (let date in data.cases) {
-    if (lastDataPiont) {
-      const newDataPoint = {
-        x: date,
-        y: data[casesConfirmed][date] - lastDataPiont,
-      };
-      chartDataCases.push(newDataPoint);
+const buildChartDataCases = (data, casesConfirmed, singleCountry) => {
+  if (singleCountry === "worldwide") {
+    const chartDataCases = [];
+    let lastDataPoint;
+    for (let date in data.cases) {
+      if (lastDataPoint) {
+        const newDataPoint = {
+          x: date,
+          y: data[casesConfirmed][date] - lastDataPoint,
+        };
+        chartDataCases.push(newDataPoint);
+      }
+      lastDataPoint = data[casesConfirmed][date];
     }
-    lastDataPiont = data[casesConfirmed][date];
+    return chartDataCases;
+  } else {
+    const chartDataCases = [];
+    let lastDataPoint;
+    for (let date in data.timeline.cases) {
+      if (lastDataPoint) {
+        const newDataPoint = {
+          x: date,
+          y: data.timeline.cases[date] - lastDataPoint,
+        };
+        chartDataCases.push(newDataPoint);
+      }
+      lastDataPoint = data.timeline.cases[date];
+    }
+    return chartDataCases;
   }
-  return chartDataCases;
 };
 
-const buildChartDataRecovered = (data, casesRecovered) => {
-  const chartDataRecovered = [];
-  let lastDataPoint;
-  for (let date in data.recovered) {
-    if (lastDataPoint) {
-      const newDataPoint = {
-        x: date,
-        y: data[casesRecovered][date] - lastDataPoint,
-      };
-      chartDataRecovered.push(newDataPoint);
+const buildChartDataRecovered = (data, casesRecovered, singleCountry) => {
+  if (singleCountry === "worldwide") {
+    const chartDataRecovered = [];
+    let lastDataPoint;
+    for (let date in data.recovered) {
+      if (lastDataPoint) {
+        const newDataPoint = {
+          x: date,
+          y: data[casesRecovered][date] - lastDataPoint,
+        };
+        chartDataRecovered.push(newDataPoint);
+      }
+      lastDataPoint = data[casesRecovered][date];
     }
-    lastDataPoint = data[casesRecovered][date];
+    return chartDataRecovered;
+  } else {
+    const chartDataCases = [];
+    let lastDataPoint;
+    for (let date in data.timeline.recovered) {
+      if (lastDataPoint) {
+        const newDataPoint = {
+          x: date,
+          y: data.timeline.recovered[date] - lastDataPoint,
+        };
+        chartDataCases.push(newDataPoint);
+      }
+      lastDataPoint = data.timeline.recovered[date];
+    }
+    return chartDataCases;
   }
-  return chartDataRecovered;
 };
 
-const buildChartDataDeaths = (data, casesDeaths) => {
-  const chartDataDeaths = [];
-  let lastDataPoint;
-  for (let date in data.deaths) {
-    if (lastDataPoint) {
-      const newDataPoint = {
-        x: date,
-        y: data[casesDeaths][date] - lastDataPoint,
-      };
-      chartDataDeaths.push(newDataPoint);
+const buildChartDataDeaths = (data, casesDeaths, singleCountry) => {
+  if (singleCountry === "worldwide") {
+    const chartDataDeaths = [];
+    let lastDataPoint;
+    for (let date in data.deaths) {
+      if (lastDataPoint) {
+        const newDataPoint = {
+          x: date,
+          y: data[casesDeaths][date] - lastDataPoint,
+        };
+        chartDataDeaths.push(newDataPoint);
+      }
+      lastDataPoint = data[casesDeaths][date];
     }
-    lastDataPoint = data[casesDeaths][date];
+    return chartDataDeaths;
+  } else {
+    const chartDataDeaths = [];
+    let lastDataPoint;
+    for (let date in data.timeline.deaths) {
+      if (lastDataPoint) {
+        const newDataPoint = {
+          x: date,
+          y: data.timeline.deaths[date] - lastDataPoint,
+        };
+        chartDataDeaths.push(newDataPoint);
+      }
+      lastDataPoint = data.timeline.deaths[date];
+    }
+    return chartDataDeaths;
   }
-  return chartDataDeaths;
 };
 
 export default function Graphic({
   casesConfirmed,
   casesRecovered,
   casesDeaths,
+  singleCountry,
 }) {
   const [dataCases, setDataCases] = useState([]);
   const [dataRecovered, setDataRecovered] = useState([]);
@@ -113,13 +162,21 @@ export default function Graphic({
 
   const fetchGlobalCases = async () => {
     try {
-      const response = await fetch(
-        "https://disease.sh/v3/covid-19/historical/all?lastdays=100"
-      );
+      const url =
+        singleCountry === "worldwide"
+          ? "https://disease.sh/v3/covid-19/historical/all?lastdays=100"
+          : `https://disease.sh/v3/covid-19/historical/${singleCountry}?lastdays=100`;
+
+      const response = await fetch(url);
+
       const data = await response.json();
-      console.log("DATAAAAA CASES LAST 100 DAYS", data);
-      const chartDataCases = buildChartDataCases(data, casesConfirmed);
-      console.log("chartDataCases", chartDataCases);
+      // console.log("DATAAAAA CASES LAST 100 DAYS", data);
+      const chartDataCases = buildChartDataCases(
+        data,
+        casesConfirmed,
+        singleCountry
+      );
+      // console.log("chartDataCases", chartDataCases);
       setDataCases(chartDataCases);
     } catch (error) {
       console.log(error);
@@ -128,17 +185,25 @@ export default function Graphic({
 
   useEffect(() => {
     fetchGlobalCases();
-  }, [casesConfirmed]);
+  }, [casesConfirmed, singleCountry]);
 
   const fetchGlobalRecoveries = async () => {
     try {
-      const response = await fetch(
-        "https://disease.sh/v3/covid-19/historical/all?lastdays=100"
-      );
+      const url =
+        singleCountry === "worldwide"
+          ? "https://disease.sh/v3/covid-19/historical/all?lastdays=100"
+          : `https://disease.sh/v3/covid-19/historical/${singleCountry}?lastdays=100`;
+
+      const response = await fetch(url);
+
       const data = await response.json();
-      console.log("data", data);
-      const chartDataRecovered = buildChartDataRecovered(data, casesRecovered);
-      console.log("chartDataDeaths", chartDataRecovered);
+      // console.log("data", data);
+      const chartDataRecovered = buildChartDataRecovered(
+        data,
+        casesRecovered,
+        singleCountry
+      );
+      // console.log("chartDataDeaths", chartDataRecovered);
       setDataRecovered(chartDataRecovered);
     } catch (error) {
       console.log(error);
@@ -147,15 +212,22 @@ export default function Graphic({
 
   useEffect(() => {
     fetchGlobalRecoveries();
-  }, [casesRecovered]);
+  }, [casesRecovered, singleCountry]);
 
   const fetchGlobalCasesDeaths = async () => {
     try {
-      const response = await fetch(
-        "https://disease.sh/v3/covid-19/historical/all?lastdays=100"
-      );
+      const url =
+        singleCountry === "worldwide"
+          ? "https://disease.sh/v3/covid-19/historical/all?lastdays=100"
+          : `https://disease.sh/v3/covid-19/historical/${singleCountry}?lastdays=100`;
+
+      const response = await fetch(url);
       const data = await response.json();
-      const chartDataDeaths = buildChartDataDeaths(data, casesDeaths);
+      const chartDataDeaths = buildChartDataDeaths(
+        data,
+        casesDeaths,
+        singleCountry
+      );
       setDataDeaths(chartDataDeaths);
     } catch (error) {
       console.log(error);
@@ -164,7 +236,7 @@ export default function Graphic({
 
   useEffect(() => {
     fetchGlobalCasesDeaths();
-  }, [casesDeaths]);
+  }, [casesDeaths, singleCountry]);
 
   return (
     <div>

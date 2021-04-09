@@ -140,7 +140,6 @@ export default function Graphic({
   const [dataDeaths, setDataDeaths] = useState([]);
 
   const fetchGlobalCases = async () => {
-    // const singleCountry = "worldwide";
     try {
       const url =
         singleCountry === "worldwide"
