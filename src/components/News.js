@@ -11,10 +11,10 @@ export default function News(news) {
         "https://newsapi.org/v2/top-headlines?language=en&category=health&sortBy=popularity&apiKey=9208243d5ab8480faa1bd825739742a4"
       );
       const data = await fetchNews.json();
-      console.log("Covid News:", data);
+      // console.log("Covid News:", data);
       setNewsData(data.articles);
 
-      console.log("NEWS:", data.articles);
+      // console.log("NEWS:", data.articles);
     } catch (error) {
       console.log(error);
     }

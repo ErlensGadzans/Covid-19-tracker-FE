@@ -32,9 +32,9 @@ export default function MainPage() {
     try {
       const response = await fetch("https://disease.sh/v3/covid-19/all");
       const data = await response.json();
-      console.log("GLOBAL DATA:", data);
+      // console.log("GLOBAL DATA:", data);
       setGlobalCases(data);
-      console.log("GLOBAL CASES:", data);
+      // console.log("GLOBAL CASES:", data);
     } catch (error) {
       console.log(error);
     }
@@ -84,7 +84,7 @@ export default function MainPage() {
     const data = await fetchCountry.json();
     console.log("NEEEEEEEERWWWWWW", data);
     setSingleCountry(countryName);
-    // console.log("COUNTRY NAME", countryName);
+    console.log("COUNTRY NAME", countryName);
     setCountry({
       confirmed: data.cases,
       recovered: data.recovered,
@@ -197,12 +197,14 @@ export default function MainPage() {
               casesConfirmed={casesConfirmed}
               casesDeaths={casesDeaths}
               casesRecovered={casesRecovered}
+              singleCountry={singleCountry}
             />
             <GraphicDailyCases
               className="chart-container"
               casesConfirmed={casesConfirmed}
               casesDeaths={casesDeaths}
               casesRecovered={casesRecovered}
+              singleCountry={singleCountry}
             />
             <GraphicVaccine className="chart-container" vaccine={vaccine} />
           </Col>

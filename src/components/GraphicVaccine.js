@@ -76,9 +76,9 @@ export default function Graphic(vaccine) {
         "https://disease.sh/v3/covid-19/vaccine/coverage"
       );
       const data = await response.json();
-      console.log("VACCINE", data);
+      // console.log("VACCINE", data);
       const chartDataVaccine = buildChartData(data, vaccine);
-      console.log("chartDataVaccine", chartDataVaccine);
+      // console.log("chartDataVaccine", chartDataVaccine);
       setDataVaccine(chartDataVaccine);
     } catch (error) {
       console.log(error);
