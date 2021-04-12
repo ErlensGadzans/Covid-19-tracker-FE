@@ -8,7 +8,13 @@ export default function News(news) {
   const fetchCovidNews = async () => {
     try {
       const response = await fetch(
-        "https://newsapi.org/v2/top-headlines?language=en&category=health&sortBy=popularity&apiKey=9208243d5ab8480faa1bd825739742a4"
+        "https://newsapi.org/v2/top-headlines?language=en&category=health&sortBy=popularity",
+        {
+          method: "GET",
+          headers: {
+            "X-Api-Key": "9208243d5ab8480faa1bd825739742a4",
+          },
+        }
       );
       const data = await response.json();
       // console.log("Covid News:", data);
