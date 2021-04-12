@@ -8,17 +8,11 @@ export default function News(news) {
   const fetchCovidNews = async () => {
     try {
       const response = await fetch(
-        "https://newsapi.org/v2/top-headlines?language=en&category=health&sortBy=popularity",
-        {
-          method: "GET",
-          headers: {
-            "x-api-key": "9208243d5ab8480faa1bd825739742a4",
-          },
-        }
+        "https://api.mediastack.com/v1/news?access_key=fcc4ff9207bc42339aea383a9e7f15b6&countries=gb&keywords=covid19"
       );
       const data = await response.json();
       // console.log("Covid News:", data);
-      setNewsData(data.articles);
+      setNewsData(data.data);
 
       // console.log("NEWS:", data.articles);
     } catch (error) {
@@ -37,19 +31,17 @@ export default function News(news) {
           newsData.map((news) => (
             <>
               <div>
-                <Card.Img variant="top" src={news.urlToImage} alt="" />
+                <Card.Img variant="top" src={news.image} alt="" />
 
                 <Card.Body>
                   <Card.Title>{news.title}</Card.Title>
-                  <Card.Text>{news.content}</Card.Text>
+                  <Card.Text>{news.description}</Card.Text>
                   <Button variant="danger" href={news.url} target="_blank">
                     Read more
                   </Button>
                 </Card.Body>
                 <Card.Footer>
-                  <small className="text-muted">
-                    Source: {news.source.name}{" "}
-                  </small>
+                  <small className="text-muted">Source: {news.source} </small>
                 </Card.Footer>
               </div>
             </>
