@@ -8,9 +8,15 @@ const options = {
     display: true,
     position: "top",
     text: "Daily cases for past 100 days",
+    fontColor: "lightgray",
+    fontSize: 14,
   },
   legend: {
     display: true,
+    labels: {
+      fontColor: "lightgray",
+      fontSize: 14,
+    },
   },
 
   elements: {
@@ -40,6 +46,9 @@ const options = {
             month: "MMM YYYY",
           },
         },
+        ticks: {
+          fontColor: "lightgray",
+        },
       },
     ],
     yAxes: [
@@ -48,6 +57,7 @@ const options = {
           callback: function (value) {
             return numeral(value).format("0a");
           },
+          fontColor: "lightgray",
         },
       },
     ],

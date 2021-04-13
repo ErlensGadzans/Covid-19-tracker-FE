@@ -11,6 +11,10 @@ const options = {
   },
   legend: {
     display: true,
+    labels: {
+      fontColor: "lightgray",
+      fontSize: 14,
+    },
   },
 
   elements: {
@@ -40,6 +44,9 @@ const options = {
             month: "MMM YYYY",
           },
         },
+        ticks: {
+          fontColor: "lightgray",
+        },
       },
     ],
     yAxes: [
@@ -48,6 +55,7 @@ const options = {
           callback: function (value) {
             return numeral(value).format("0a");
           },
+          fontColor: "lightgray",
         },
       },
     ],
