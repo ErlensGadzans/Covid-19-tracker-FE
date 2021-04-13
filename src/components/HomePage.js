@@ -98,8 +98,8 @@ export default function MainPage() {
   return (
     <div className="app">
       <Row className="">
-        <Col className="col-8">
-          <Row className="logoGlobaldataMenu">
+        <Col className="" xs={12} sm={12} md={12} lg={8}>
+          <Row className="logoGlobaldataMenu" column sm={12} md={6} lg={8}>
             <img style={{ height: "65px" }} src={logo} />
             <FormControl className="app__dropdown">
               <Select
@@ -190,7 +190,7 @@ export default function MainPage() {
             </Col>
           </Row>
         </Col>
-        <Col className="col-4 ">
+        <Col className="" xs={12} sm={12} md={12} lg={4}>
           <Col className="charts ">
             <GraphicCases
               className="chart-container "
@@ -216,10 +216,10 @@ export default function MainPage() {
       </Row>
 
       <Row>
-        <Col className="newsColumn col-8">
+        <Col className="newsColumn" xs={12} sm={6} md={6} lg={8}>
           <News news={news} />
         </Col>
-        <Col className="tableAllCountries col-4">
+        <Col className="tableAllCountries" xs={12} sm={6} md={6} lg={4}>
           <Card className="casesByCountriesCard">
             <Card.Body className="casesByCountries">
               <Table countries={tableData} />
